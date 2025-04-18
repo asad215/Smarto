@@ -3,32 +3,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Smarto - AI Solutions</title>
-    <link rel="stylesheet" href="style.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to Smarto</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
     <header>
         <h1>Welcome to Smarto</h1>
         <p>Your AI solution for chatbots, voice agents, and automation tools.</p>
     </header>
-    <main>
-        <section>
-            <h2>What We Offer</h2>
-            <ul>
-                <li><strong>Chatbot Henry:</strong> Fast, friendly customer service support.</li>
-                <li><strong>Chatbot Maya:</strong> Leads and sales generation expert.</li>
-                <li><strong>Chatbot James:</strong> Combines support and lead generation in one.</li>
-                <li><strong>Asad Bot:</strong> Your smart assistant for your business website.</li>
-            </ul>
-        </section>
-        <section>
-            <h2>Why Choose Smarto?</h2>
-            <p>Our AI bots are designed to increase your productivity and improve customer satisfaction, all while being available 24/7.</p>
-        </section>
-    </main>
-    <footer>
-        <p>Contact us: support@smarto.ai</p>
-    </footer>
+    <section class="offer">
+        <h2>What We Offer</h2>
+        <ul>
+            <li><strong>Chatbot Henry:</strong> Fast, friendly customer service support.</li>
+            <li><strong>Chatbot Maya:</strong> Leads and sales generation expert.</li>
+            <li><strong>Chatbot James:</strong> Combines support and lead generation in one.</li>
+            <li><strong>Asad Bot:</strong> Your smart assistant for your business website.</li>
+        </ul>
+    </section>
+    <section class="why">
+        <h2>Why Choose Smarto?</h2>
+        <p>Our AI bots are designed to increase your productivity and improve customer satisfaction, all while being available 24/7.</p>
+    </section>
+
+    <!-- Asad Bot Script -->
+    <script>
+        window.onload = function () {
+            const bot = document.createElement('div');
+            bot.id = 'asad-bot';
+            bot.innerHTML = '<iframe src="https://example.com/asad-bot" width="350" height="500" style="border:none;"></iframe>';
+            bot.style.position = 'fixed';
+            bot.style.bottom = '20px';
+            bot.style.right = '20px';
+            bot.style.zIndex = '9999';
+            document.body.appendChild(bot);
+        };
+    </script>
 </body>
 </html>
