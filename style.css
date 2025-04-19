@@ -76,3 +76,17 @@ iframe {
         height: auto;
     }
 }
+
+/* Ensure the site is scrollable on mobile */
+body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: auto;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+html {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
