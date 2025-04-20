@@ -31,5 +31,5 @@ app.post("/chat", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(James bot is live at http://localhost:${port});
+console.log(James bot is live at http://localhost:${port});
 });
