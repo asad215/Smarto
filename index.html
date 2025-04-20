@@ -3,99 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Smarto.Space – AI for Business</title>
+  <title>James Chatbot</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #0d0d0d;
-      color: #f0f0f0;
+      background-color: #1a1a1a;
+      font-family: Arial, sans-serif;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-
-    header {
-      padding: 100px 20px 60px;
-      text-align: center;
-      background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
-    }
-
-    header h1 {
-      font-size: 52px;
-      margin-bottom: 10px;
-      color: #00f7ff;
-    }
-
-    header p {
-      font-size: 22px;
-      color: #aaa;
-    }
-
-    section {
-      padding: 60px 20px;
-      text-align: center;
-      border-top: 1px solid #222;
-    }
-
-    section h2 {
-      font-size: 32px;
-      color: #00f7ff;
-      margin-bottom: 20px;
-    }
-
-    section p {
-      max-width: 800px;
-      margin: auto;
-      font-size: 18px;
-      color: #ccc;
-    }
-
-    footer {
-      padding: 30px;
-      text-align: center;
-      background-color: #111;
-      color: #555;
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <h1>Smarto.Space</h1>
-    <p>AI Solutions to Accelerate Growth – Smart Chatbots, Voice Agents, and Automation Tools</p>
-  </header>
-
-  <section>
-    <h2>What We Do</h2>
-    <p>Smarto.Space helps businesses automate support, generate leads, and deliver 24/7 customer service using AI-powered chatbots and voice agents. No coding. Just results.</p>
-  </section>
-
-  <section>
-    <h2>Why Choose Smarto?</h2>
-    <p>Our AI agents work around the clock to handle inquiries, qualify leads, and boost customer engagement. We help you save time, grow faster, and focus on what matters.</p>
-  </section>
-
-  <footer>
-    &copy; 2025 Smarto.Space – All rights reserved.
-  </footer>
-
-  <!-- James Chat Widget Button -->
-  <div id="james-widget-button" onclick="toggleJamesWidget()" style="position: fixed; bottom: 20px; right: 20px; background-color: #2d2dff; color: white; border-radius: 50px; padding: 12px 20px; cursor: pointer; font-weight: bold; z-index: 9999; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
-    <img src="https://i.ibb.co/f8w2vkf/james-avatar.png" alt="James" style="width: 24px; height: 24px; border-radius: 50%; vertical-align: middle; margin-right: 8px;">
-    Chat with James
-  </div>
-
-  <!-- James Chat Iframe -->
-  <iframe
-    id="james-chat-iframe"
-    src="https://smarto-j9k7-cju9jgw16-asad-razzaq-s-projects.vercel.app"
-    style="position: fixed; bottom: 70px; right: 20px; width: 380px; height: 500px; border: none; border-radius: 20px; display: none; z-index: 9998;">
-  </iframe>
-
-  <script>
-    function toggleJamesWidget() {
-      const iframe = document.getElementById('james-chat-iframe');
-      iframe.style.display = iframe.style.display === 'none' ? 'block' : 'none';
-    }
-  </script>
-
+  <iframe src="https://chat.openai.com" title="James Chatbot"></iframe>
 </body>
 </html>
