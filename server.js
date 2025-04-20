@@ -1,8 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const dotenv = require("dotenv");
 const { OpenAI } = require("openai");
 
+dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -10,7 +12,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const openai = new OpenAI({
-  apiKey: "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"
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 app.post("/chat", async (req, res) => {
@@ -19,7 +21,7 @@ app.post("/chat", async (req, res) => {
   try {
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: message }]
+      messages: [{ role: "user", content: message }],
     });
 
     const reply = completion.choices[0].message.content;
@@ -31,4 +33,5 @@ app.post("/chat", async (req, res) => {
 });
 
 app.listen(port, () => {
-console.log(James bot is live at http://localhost:${port});
+  console.log(James bot is live at http://localhost:${port});
+});
