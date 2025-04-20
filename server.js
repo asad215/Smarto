@@ -6,7 +6,7 @@ const { Configuration, OpenAIApi } = require("openai");
 require("dotenv").config();
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -25,13 +25,14 @@ app.post("/chat", async (req, res) => {
       messages: [{ role: "user", content: message }],
     });
 
-    res.json({ reply: completion.data.choices[0].message.content });
+    const reply = completion.data.choices[0].message.content;
+    res.json({ reply });
   } catch (error) {
-    console.error("Error with OpenAI API:", error);
-    res.status(500).json({ error: "Failed to get response from AI" });
+    console.error("OpenAI Error:", error.message);
+    res.status(500).json({ error: "Failed to get reply" });
   }
 });
 
 app.listen(port, () => {
-  console.log(`James bot listening at http://localhost:${port}`);
+  console.log(`James is running on http://localhost:${port}`);
 });
