@@ -2,49 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Smarto | James Chatbot</title>
-  <style>
-    body { background: #111; color: #fff; font-family: Arial; text-align: center; padding: 50px; }
-    .chatbox { max-width: 400px; margin: auto; background: #222; padding: 20px; border-radius: 10px; }
-    .chat-log { height: 300px; overflow-y: auto; background: #333; padding: 10px; border-radius: 5px; text-align: left; }
-    .chat-log div { margin-bottom: 10px; }
-    input, button { padding: 10px; margin-top: 10px; }
-    input { width: 70%; border: none; border-radius: 5px 0 0 5px; background: #444; color: white; }
-    button { border: none; background: #2d2dff; color: white; border-radius: 0 5px 5px 0; }
-  </style>
+  <title>Smarto AI - Talk to James</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Chat with James</h1>
-  <div class="chatbox">
-    <div class="chat-log" id="chatLog"></div>
-    <input type="text" id="userInput" placeholder="Type your message..." />
+  <h1>Welcome to Smarto.Space</h1>
+  <p>Hi, I’m <strong>James</strong> – your AI expert for customer support and sales!</p>
+  <p>Ask me about our services, pricing, or leave your contact to get a call from our team.</p>
+
+  <div id="chatbox">
+    <div id="chat-body"></div>
+    <input type="text" id="userInput" placeholder="Type your question or contact details...">
     <button onclick="sendMessage()">Send</button>
+    <button onclick="startVoiceInput()">🎤 Speak</button>
   </div>
-  <script>
-    async function sendMessage() {
-      const input = document.getElementById("userInput");
-      const log = document.getElementById("chatLog");
-      const msg = input.value.trim();
-      if (!msg) return;
 
-      log.innerHTML += `<div>You: ${msg}</div>`;
-      log.innerHTML += `<div>James: <span id="typing">...</span></div>`;
-      input.value = "";
-
-      try {
-        const res = await fetch("/api/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: msg })
-        });
-        const data = await res.json();
-        document.getElementById("typing").parentElement.innerHTML = `James: ${data.reply}`;
-      } catch (err) {
-        document.getElementById("typing").parentElement.innerHTML = "James: Error connecting to GPT.";
-      }
-
-      log.scrollTop = log.scrollHeight;
-    }
-  </script>
+  <script src="chat.js"></script>
 </body>
 </html>

@@ -1,92 +1,36 @@
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #0d0d0d;
-  color: #f1f1f1;
-}
-header {
-  background: #1a1a1a;
-  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #121212;
+  color: white;
   text-align: center;
-  border-bottom: 2px solid #333;
-}
-header h1 {
-  margin: 0;
-  font-size: 28px;
-}
-nav a {
-  margin: 0 15px;
-  color: #f1f1f1;
-  text-decoration: none;
-  font-weight: bold;
-  transition: color 0.3s;
-}
-nav a:hover {
-  color: #00bcd4;
-}
-main {
   padding: 40px;
-  max-width: 1000px;
-  margin: auto;
 }
-main h2 {
-  color: #00bcd4;
+#chatbox {
+  background-color: #1f1f1f;
+  width: 400px;
+  margin: 20px auto;
+  border-radius: 10px;
+  padding: 20px;
 }
-footer {
-  background: #1a1a1a;
-  text-align: center;
-  padding: 15px;
-  border-top: 2px solid #333;
-  position: fixed;
-  width: 100%;
-  bottom: 0;
+#chat-body {
+  text-align: left;
+  min-height: 200px;
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 10px;
 }
-ul {
-  padding-left: 20px;
+input[type="text"] {
+  width: 65%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
 }
-iframe {
-  border-radius: 8px;
-  border: 1px solid #333;
-}
-
-
-@media (max-width: 768px) {
-    body {
-        font-size: 16px;
-        padding: 10px;
-    }
-    header, footer {
-        text-align: center;
-    }
-    nav ul {
-        flex-direction: column;
-        padding: 0;
-    }
-    section {
-        margin: 10px 0;
-    }
-    .container, .content {
-        width: 100%;
-        padding: 10px;
-        box-sizing: border-box;
-    }
-    img {
-        max-width: 100%;
-        height: auto;
-    }
-}
-
-/* Ensure the site is scrollable on mobile */
-body {
-    overflow-x: hidden;
-    overflow-y: auto;
-    height: auto;
-    max-width: 100%;
-    word-wrap: break-word;
-}
-
-html {
-    overflow-x: hidden;
-    scroll-behavior: smooth;
+button {
+  background-color: #2d89ef;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 5px;
+  margin: 2px;
+  cursor: pointer;
 }
