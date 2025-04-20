@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Smarto.Space – James</title>
+  <meta charset="UTF-8">
+  <title>Smarto | James Chatbot</title>
   <style>
-    body { background: #111; color: white; font-family: sans-serif; text-align: center; padding: 50px; }
+    body { background: #111; color: #fff; font-family: Arial; text-align: center; padding: 50px; }
     .chatbox { max-width: 400px; margin: auto; background: #222; padding: 20px; border-radius: 10px; }
-    .chat-log { height: 300px; overflow-y: auto; text-align: left; background: #333; padding: 10px; border-radius: 5px; }
+    .chat-log { height: 300px; overflow-y: auto; background: #333; padding: 10px; border-radius: 5px; text-align: left; }
+    .chat-log div { margin-bottom: 10px; }
     input, button { padding: 10px; margin-top: 10px; }
     input { width: 70%; border: none; border-radius: 5px 0 0 5px; background: #444; color: white; }
     button { border: none; background: #2d2dff; color: white; border-radius: 0 5px 5px 0; }
   </style>
 </head>
 <body>
-  <h1>Smarto.Space</h1>
-  <p>Chat with James</p>
+  <h1>Chat with James</h1>
   <div class="chatbox">
     <div class="chat-log" id="chatLog"></div>
-    <input type="text" id="userInput" placeholder="Type something..." />
+    <input type="text" id="userInput" placeholder="Type your message..." />
     <button onclick="sendMessage()">Send</button>
   </div>
   <script>
     async function sendMessage() {
       const input = document.getElementById("userInput");
-      const chatLog = document.getElementById("chatLog");
+      const log = document.getElementById("chatLog");
       const msg = input.value.trim();
       if (!msg) return;
 
-      chatLog.innerHTML += `<div>You: ${msg}</div>`;
-      chatLog.innerHTML += `<div>James: ...</div>`;
+      log.innerHTML += `<div>You: ${msg}</div>`;
+      log.innerHTML += `<div>James: <span id="typing">...</span></div>`;
       input.value = "";
 
       try {
@@ -38,12 +38,12 @@
           body: JSON.stringify({ message: msg })
         });
         const data = await res.json();
-        chatLog.innerHTML = chatLog.innerHTML.replace("James: ...", `James: ${data.reply}`);
-      } catch {
-        chatLog.innerHTML = chatLog.innerHTML.replace("James: ...", "James: Error connecting.");
+        document.getElementById("typing").parentElement.innerHTML = `James: ${data.reply}`;
+      } catch (err) {
+        document.getElementById("typing").parentElement.innerHTML = "James: Error connecting to GPT.";
       }
 
-      chatLog.scrollTop = chatLog.scrollHeight;
+      log.scrollTop = log.scrollHeight;
     }
   </script>
 </body>
