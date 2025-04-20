@@ -2,35 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Smarto AI Solutions</title>
-  <style>
-    body {
-      background-color: #0f0f0f;
-      color: white;
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      text-align: center;
-    }
-    h1 {
-      font-size: 2.5rem;
-      color: #00c8ff;
-    }
-    p {
-      font-size: 1.2rem;
-      margin-top: 10px;
-    }
-  </style>
+  <title>Smarto Chat with James</title>
 </head>
-<body>
+<body style="font-family: sans-serif; background: #111; color: white; text-align: center;">
   <h1>Welcome to Smarto</h1>
-  <p>Your AI solution for chatbots, voice agents, and automation tools.</p>
+  <p>Smarto’s James AI Assistant is now live.</p>
 
-  <!-- James Chatbot Widget -->
-  <iframe
-    src="https://james.smartochatbot.online"
-    style="position: fixed; bottom: 20px; right: 20px; width: 360px; height: 500px; border: none; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); z-index: 9999;"
-    title="James - Smarto AI Chat">
-  </iframe>
+  <script>
+    async function sendMessage(message) {
+      const res = await fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message })
+      });
+      const data = await res.json();
+      console.log("James:", data.reply);
+    }
+  </script>
 </body>
 </html>
