@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const { OpenAI } = require("openai");
 
 dotenv.config();
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -16,9 +17,13 @@ const openai = new OpenAI({
 });
 
 app.post("/chat", async (req, res) => {
-  const { message } = req.body;
-
   try {
+    const { message } = req.body;
+
+    if (!message) {
+      return res.status(400).json({ error: "Message is required" });
+    }
+
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: message }],
@@ -33,5 +38,5 @@ app.post("/chat", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(James bot is live at http://localhost:${port});
+  console.log(`James bot is live at http://localhost:${port}`);
 });
