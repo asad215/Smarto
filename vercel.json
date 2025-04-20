@@ -1,13 +1,6 @@
+
 {
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Frame-Options",
-          "value": "ALLOWALL"
-        }
-      ]
-    }
+  "rewrites": [
+    { "source": "/api/chat", "destination": "/api/chat.js" }
   ]
 }

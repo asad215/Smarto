@@ -3,200 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Smarto.Space – AI Solutions</title>
+  <title>Smarto.Space – James Chatbot</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #0d0d0d;
-      color: #f0f0f0;
-    }
-    header {
-      padding: 80px 20px 50px;
-      text-align: center;
-      background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
-    }
-    header h1 {
-      font-size: 48px;
-      margin-bottom: 10px;
-      color: #00f7ff;
-    }
-    header p {
-      font-size: 20px;
-      color: #aaa;
-    }
-    section {
-      padding: 60px 20px;
-      text-align: center;
-      border-top: 1px solid #222;
-    }
-    section h2 {
-      font-size: 32px;
-      color: #00f7ff;
-      margin-bottom: 20px;
-    }
-    section p {
-      max-width: 800px;
-      margin: auto;
-      font-size: 18px;
-      color: #ccc;
-    }
-    footer {
-      padding: 30px;
-      text-align: center;
-      background-color: #111;
-      color: #555;
-    }
-    .chatbox {
-      font-family: 'Segoe UI', sans-serif;
-      backdrop-filter: blur(8px);
-      background: linear-gradient(145deg, #1c1c2c, #222232);
-      border: 1px solid #2d2dff;
-
-      position: fixed;
-      bottom: 70px;
-      right: 20px;
-      width: 360px;
-      height: 480px;
-      background: #1e1e1e;
-      border-radius: 15px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
-      overflow: hidden;
-      display: none;
-      flex-direction: column;
-      z-index: 9998;
-    }
-    .chat-header {
-      background: #2d2dff;
-      padding: 12px;
-      text-align: center;
-      font-weight: bold;
-      color: white;
-    }
-    .chat-body {
-      color: #eee;
-      font-size: 15px;
-
-      flex: 1;
-      padding: 10px;
-      overflow-y: auto;
-    }
-    .chat-input {
-      display: flex;
-    }
-    .chat-input input {
-      background-color: #2a2a3d;
-      color: #fff;
-      border-top-left-radius: 8px;
-      border-bottom-left-radius: 8px;
-
-      flex: 1;
-      padding: 10px;
-      border: none;
-      outline: none;
-    }
-    .chat-input button {
-      border-top-right-radius: 8px;
-      border-bottom-right-radius: 8px;
-      font-weight: bold;
-      transition: background 0.3s;
-
-      padding: 10px;
-      background: #2d2dff;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    .chat-toggle-button {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #2d2dff;
-      color: white;
-      border-radius: 50px;
-      padding: 12px 20px;
-      cursor: pointer;
-      font-weight: bold;
-      z-index: 9999;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
+    body { font-family: Arial, sans-serif; background-color: #111; color: white; text-align: center; padding: 50px; }
+    .chatbox { max-width: 400px; margin: auto; background: #1e1e1e; padding: 20px; border-radius: 10px; }
+    .chat-log { text-align: left; margin-bottom: 10px; height: 300px; overflow-y: auto; background: #222; padding: 10px; border-radius: 6px; }
+    .chat-log div { margin-bottom: 10px; }
+    input { width: 75%; padding: 10px; border: none; border-radius: 5px 0 0 5px; background: #333; color: white; }
+    button { padding: 10px; border: none; background: #2d2dff; color: white; border-radius: 0 5px 5px 0; cursor: pointer; }
   </style>
 </head>
 <body>
-
-  <header>
-    <h1>Smarto.Space</h1>
-    <p>AI Solutions to Accelerate Growth – Smart Chatbots, Voice Agents, and Automation Tools</p>
-  </header>
-
-  <section>
-    <h2>Our Mission</h2>
-    <p>To empower small and growing businesses with cutting-edge AI solutions that save time, increase productivity, and enhance customer engagement — all without the need for coding or complex setup.</p>
-  </section>
-
-  <section>
-    <h2>What We Offer</h2>
-    <p>Smarto.Space helps businesses automate support, generate leads, and deliver 24/7 customer service using AI-powered chatbots and voice agents.</p>
-    <p><strong>Smart Chatbots</strong> — Handle customer inquiries, qualify leads, and provide instant support 24/7.</p>
-    <p><strong>AI Voice Agents</strong> — Automate phone calls for both customer service and sales follow-ups with natural, human-like conversations.</p>
-    <p><strong>Business Automation</strong> — Streamline tasks like lead routing, appointment booking, and email responses.</p>
-    <p><strong>No Setup Hassle</strong> — We install everything for you. You just focus on growth.</p>
-  </section>
-
-  <section>
-    <h2>Why Smarto?</h2>
-    <p>Real-time, human-like AI support</p>
-    <p>24/7 availability on chat and voice</p>
-    <p>Boosted conversions and faster response times</p>
-    <p>Affordable, plug-and-play automation for any business size</p>
-  </section>
-
-  <footer>
-    &copy; 2025 Smarto.Space – All rights reserved.
-  </footer>
-
-  <!-- Chat Toggle Button -->
-  <div class="chat-toggle-button" onclick="toggleChat()">Chat with James</div>
-
-  <!-- James Chat Widget -->
-  <div class="chatbox" id="chatbox">
-    <div class="chat-header"><img src="james-profile.png" alt="James" style="width:30px; height:30px; border: 2px solid #fff; border-radius:50%; vertical-align:middle; margin-right:8px;">Chat with James</div>
-    <div class="chat-body" id="chatBody">
-      <div>Hello! I’m James. How can I help you?</div>
-    </div>
-    <div class="chat-input">
-      <input type="text" id="userInput" placeholder="Type a message..." />
-      <button onclick="sendMessage()">Send</button>
-    </div>
+  <h1>Smarto.Space</h1>
+  <p>Talk to James, your AI Assistant</p>
+  <div class="chatbox">
+    <div class="chat-log" id="chatLog"></div>
+    <input type="text" id="userInput" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
   </div>
-
   <script>
-    function toggleChat() {
-      const chat = document.getElementById('chatbox');
-      chat.style.display = chat.style.display === 'none' ? 'flex' : 'none';
-    }
+    async function sendMessage() {
+      const input = document.getElementById("userInput");
+      const log = document.getElementById("chatLog");
+      const msg = input.value.trim();
+      if (!msg) return;
 
-    function sendMessage() {
-      const input = document.getElementById('userInput');
-      const chatBody = document.getElementById('chatBody');
-      const userText = input.value.trim();
-      if (userText === "") return;
-      const userDiv = document.createElement('div');
-      userDiv.textContent = "You: " + userText;
-      chatBody.appendChild(userDiv);
+      const userMsg = document.createElement("div");
+      userMsg.textContent = "You: " + msg;
+      log.appendChild(userMsg);
 
-      const botDiv = document.createElement('div');
-      botDiv.textContent = "James: Let me get back to you on that...";
-      botDiv.style.marginTop = "5px";
-      botDiv.style.color = "#aaa";
-      chatBody.appendChild(botDiv);
+      const botMsg = document.createElement("div");
+      botMsg.textContent = "James: ...";
+      botMsg.style.color = "#aaa";
+      log.appendChild(botMsg);
 
       input.value = "";
-      chatBody.scrollTop = chatBody.scrollHeight;
+
+      try {
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: msg })
+        });
+        const data = await res.json();
+        botMsg.textContent = "James: " + (data.reply || "No response");
+      } catch (err) {
+        botMsg.textContent = "James: Error connecting to server.";
+      }
+
+      log.scrollTop = log.scrollHeight;
     }
-
-    document.getElementById('chatbox').style.display = 'none';
   </script>
-
 </body>
 </html>
