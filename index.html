@@ -48,6 +48,11 @@
       color: #555;
     }
     .chatbox {
+      font-family: 'Segoe UI', sans-serif;
+      backdrop-filter: blur(8px);
+      background: linear-gradient(145deg, #1c1c2c, #222232);
+      border: 1px solid #2d2dff;
+
       position: fixed;
       bottom: 70px;
       right: 20px;
@@ -69,6 +74,9 @@
       color: white;
     }
     .chat-body {
+      color: #eee;
+      font-size: 15px;
+
       flex: 1;
       padding: 10px;
       overflow-y: auto;
@@ -77,12 +85,22 @@
       display: flex;
     }
     .chat-input input {
+      background-color: #2a2a3d;
+      color: #fff;
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+
       flex: 1;
       padding: 10px;
       border: none;
       outline: none;
     }
     .chat-input button {
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      font-weight: bold;
+      transition: background 0.3s;
+
       padding: 10px;
       background: #2d2dff;
       color: white;
@@ -112,13 +130,25 @@
   </header>
 
   <section>
-    <h2>What We Do</h2>
-    <p>Smarto.Space helps businesses automate support, generate leads, and deliver 24/7 customer service using AI-powered chatbots and voice agents. No coding. Just results.</p>
+    <h2>Our Mission</h2>
+    <p>To empower small and growing businesses with cutting-edge AI solutions that save time, increase productivity, and enhance customer engagement — all without the need for coding or complex setup.</p>
   </section>
 
   <section>
-    <h2>Why Choose Smarto?</h2>
-    <p>Our AI agents work around the clock to handle inquiries, qualify leads, and boost customer engagement. We help you save time, grow faster, and focus on what matters.</p>
+    <h2>What We Offer</h2>
+    <p>Smarto.Space helps businesses automate support, generate leads, and deliver 24/7 customer service using AI-powered chatbots and voice agents.</p>
+    <p><strong>Smart Chatbots</strong> — Handle customer inquiries, qualify leads, and provide instant support 24/7.</p>
+    <p><strong>AI Voice Agents</strong> — Automate phone calls for both customer service and sales follow-ups with natural, human-like conversations.</p>
+    <p><strong>Business Automation</strong> — Streamline tasks like lead routing, appointment booking, and email responses.</p>
+    <p><strong>No Setup Hassle</strong> — We install everything for you. You just focus on growth.</p>
+  </section>
+
+  <section>
+    <h2>Why Smarto?</h2>
+    <p>Real-time, human-like AI support</p>
+    <p>24/7 availability on chat and voice</p>
+    <p>Boosted conversions and faster response times</p>
+    <p>Affordable, plug-and-play automation for any business size</p>
   </section>
 
   <footer>
@@ -130,7 +160,7 @@
 
   <!-- James Chat Widget -->
   <div class="chatbox" id="chatbox">
-    <div class="chat-header">Chat with James</div>
+    <div class="chat-header"><img src="james-profile.png" alt="James" style="width:30px; height:30px; border: 2px solid #fff; border-radius:50%; vertical-align:middle; margin-right:8px;">Chat with James</div>
     <div class="chat-body" id="chatBody">
       <div>Hello! I’m James. How can I help you?</div>
     </div>
@@ -165,7 +195,6 @@
       chatBody.scrollTop = chatBody.scrollHeight;
     }
 
-    // Start with chat hidden
     document.getElementById('chatbox').style.display = 'none';
   </script>
 
