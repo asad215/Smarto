@@ -1,22 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Smarto AI - Talk to James</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smarto AI Solutions</title>
+  <style>
+    body {
+      background-color: #0f0f0f;
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: #00c8ff;
+    }
+    p {
+      font-size: 1.2rem;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Welcome to Smarto.Space</h1>
-  <p>Hi, I’m <strong>James</strong> – your AI expert for customer support and sales!</p>
-  <p>Ask me about our services, pricing, or leave your contact to get a call from our team.</p>
+  <h1>Welcome to Smarto</h1>
+  <p>Your AI solution for chatbots, voice agents, and automation tools.</p>
 
-  <div id="chatbox">
-    <div id="chat-body"></div>
-    <input type="text" id="userInput" placeholder="Type your question or contact details...">
-    <button onclick="sendMessage()">Send</button>
-    <button onclick="startVoiceInput()">🎤 Speak</button>
-  </div>
-
-  <script src="chat.js"></script>
+  <!-- James Chatbot Widget -->
+  <iframe
+    src="https://james.smartochatbot.online"
+    style="position: fixed; bottom: 20px; right: 20px; width: 360px; height: 500px; border: none; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); z-index: 9999;"
+    title="James - Smarto AI Chat">
+  </iframe>
 </body>
 </html>
