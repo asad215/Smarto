@@ -2,41 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Smarto.Space – James Chatbot</title>
+  <title>Smarto.Space – James</title>
   <style>
-    body { font-family: Arial, sans-serif; background-color: #111; color: white; text-align: center; padding: 50px; }
-    .chatbox { max-width: 400px; margin: auto; background: #1e1e1e; padding: 20px; border-radius: 10px; }
-    .chat-log { text-align: left; margin-bottom: 10px; height: 300px; overflow-y: auto; background: #222; padding: 10px; border-radius: 6px; }
-    .chat-log div { margin-bottom: 10px; }
-    input { width: 75%; padding: 10px; border: none; border-radius: 5px 0 0 5px; background: #333; color: white; }
-    button { padding: 10px; border: none; background: #2d2dff; color: white; border-radius: 0 5px 5px 0; cursor: pointer; }
+    body { background: #111; color: white; font-family: sans-serif; text-align: center; padding: 50px; }
+    .chatbox { max-width: 400px; margin: auto; background: #222; padding: 20px; border-radius: 10px; }
+    .chat-log { height: 300px; overflow-y: auto; text-align: left; background: #333; padding: 10px; border-radius: 5px; }
+    input, button { padding: 10px; margin-top: 10px; }
+    input { width: 70%; border: none; border-radius: 5px 0 0 5px; background: #444; color: white; }
+    button { border: none; background: #2d2dff; color: white; border-radius: 0 5px 5px 0; }
   </style>
 </head>
 <body>
   <h1>Smarto.Space</h1>
-  <p>Talk to James, your AI Assistant</p>
+  <p>Chat with James</p>
   <div class="chatbox">
     <div class="chat-log" id="chatLog"></div>
-    <input type="text" id="userInput" placeholder="Type your message..." />
+    <input type="text" id="userInput" placeholder="Type something..." />
     <button onclick="sendMessage()">Send</button>
   </div>
   <script>
     async function sendMessage() {
       const input = document.getElementById("userInput");
-      const log = document.getElementById("chatLog");
+      const chatLog = document.getElementById("chatLog");
       const msg = input.value.trim();
       if (!msg) return;
 
-      const userMsg = document.createElement("div");
-      userMsg.textContent = "You: " + msg;
-      log.appendChild(userMsg);
-
-      const botMsg = document.createElement("div");
-      botMsg.textContent = "James: ...";
-      botMsg.style.color = "#aaa";
-      log.appendChild(botMsg);
-
+      chatLog.innerHTML += `<div>You: ${msg}</div>`;
+      chatLog.innerHTML += `<div>James: ...</div>`;
       input.value = "";
 
       try {
@@ -46,12 +38,12 @@
           body: JSON.stringify({ message: msg })
         });
         const data = await res.json();
-        botMsg.textContent = "James: " + (data.reply || "No response");
-      } catch (err) {
-        botMsg.textContent = "James: Error connecting to server.";
+        chatLog.innerHTML = chatLog.innerHTML.replace("James: ...", `James: ${data.reply}`);
+      } catch {
+        chatLog.innerHTML = chatLog.innerHTML.replace("James: ...", "James: Error connecting.");
       }
 
-      log.scrollTop = log.scrollHeight;
+      chatLog.scrollTop = chatLog.scrollHeight;
     }
   </script>
 </body>
