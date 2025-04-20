@@ -7,22 +7,83 @@
   <style>
     body {
       margin: 0;
-      background-color: #1a1a1a;
+      background-color: #111;
       font-family: Arial, sans-serif;
       color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      padding: 20px;
     }
-    iframe {
+    .chatbox {
       width: 100%;
-      height: 100%;
+      max-width: 400px;
+      height: 500px;
+      background: #1e1e1e;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-header {
+      background: #2d2dff;
+      padding: 12px;
+      text-align: center;
+      font-weight: bold;
+      color: white;
+    }
+    .chat-body {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+    }
+    .chat-input {
+      display: flex;
+    }
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
       border: none;
+      outline: none;
+    }
+    .chat-input button {
+      padding: 10px;
+      background: #2d2dff;
+      color: white;
+      border: none;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <iframe src="https://chat.openai.com" title="James Chatbot"></iframe>
+  <div class="chatbox">
+    <div class="chat-header">James - AI Assistant</div>
+    <div class="chat-body" id="chatBody">
+      <div>Hi! I’m James. How can I help you today?</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="userInput" placeholder="Type a message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById('userInput');
+      const chatBody = document.getElementById('chatBody');
+      const userText = input.value.trim();
+      if (userText === "") return;
+      const userDiv = document.createElement('div');
+      userDiv.textContent = "You: " + userText;
+      chatBody.appendChild(userDiv);
+
+      const botDiv = document.createElement('div');
+      botDiv.textContent = "James: Let me get back to you on that...";
+      botDiv.style.marginTop = "5px";
+      botDiv.style.color = "#aaa";
+      chatBody.appendChild(botDiv);
+
+      input.value = "";
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+  </script>
 </body>
 </html>
