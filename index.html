@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chatbot Button Embed</title>
+  <meta charset="UTF-8">
+  <title>Chat with James</title>
   <style>
-    body { margin: 0; font-family: Arial, sans-serif; }
     #chat-button {
       position: fixed;
       bottom: 20px;
@@ -34,12 +32,12 @@
 </head>
 <body>
   <button id="chat-button">Chat with us</button>
-  <iframe id="chat-iframe" src="widget.html" title="Chatbot Widget"></iframe>
+  <iframe id="chat-iframe" src="widget.html" title="James Chatbot Widget"></iframe>
 
   <script>
-    const btn = document.getElementById('chat-button');
+    const button = document.getElementById('chat-button');
     const iframe = document.getElementById('chat-iframe');
-    btn.addEventListener('click', () => {
+    button.addEventListener('click', () => {
       iframe.style.display = iframe.style.display === 'block' ? 'none' : 'block';
     });
   </script>
