@@ -1,29 +1,38 @@
-
 const express = require("express");
-const app = express();
-const bodyParser = require("body-parser");
 const cors = require("cors");
+const bodyParser = require("body-parser");
+const { Configuration, OpenAIApi } = require("openai");
+
+const app = express();
+const port = process.env.PORT || 10000;
 
 app.use(cors());
 app.use(bodyParser.json());
 
-// Chat endpoint
-app.post("/chat", async (req, res) => {
-  const userMessage = req.body.message;
-  if (!userMessage) {
-    return res.status(400).json({ error: "No message provided" });
-  }
-
-  // Simulated bot response
-  res.json({ response: "James says: " + userMessage });
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
 });
+const openai = new OpenAIApi(configuration);
 
-// Home page route
 app.get("/", (req, res) => {
   res.send("James Chatbot is running.");
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log("James bot is live on port " + PORT);
+app.post("/chat", async (req, res) => {
+  const userMessage = req.body.message;
+  try {
+    const completion = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "user", content: userMessage }],
+    });
+    const reply = completion.data.choices[0].message.content;
+    res.json({ reply });
+  } catch (err) {
+    console.error("OpenAI error:", err);
+    res.status(500).json({ reply: "Sorry, I can't respond right now." });
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
