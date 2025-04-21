@@ -19,6 +19,7 @@
       font-size: 16px;
       z-index: 1000;
     }
+
     #chat-box {
       position: fixed;
       bottom: 70px;
@@ -32,21 +33,25 @@
       flex-direction: column;
       z-index: 1000;
     }
+
     #chat-messages {
       flex: 1;
       padding: 10px;
       overflow-y: auto;
     }
+
     #chat-input {
       display: flex;
       border-top: 1px solid #ccc;
     }
+
     #chat-input input {
       flex: 1;
       padding: 10px;
       border: none;
       border-radius: 0 0 0 8px;
     }
+
     #chat-input button {
       padding: 10px;
       border: none;
@@ -57,44 +62,50 @@
   </style>
 </head>
 <body>
-
-<button id="chat-button">Chat with James</button>
-<div id="chat-box">
-  <div id="chat-messages"></div>
-  <div id="chat-input">
-    <input type="text" id="messageInput" placeholder="Type your message..." />
-    <button onclick="sendMessage()">Send</button>
+  <button id="chat-button">Chat with James</button>
+  <div id="chat-box">
+    <div id="chat-messages"></div>
+    <div id="chat-input">
+      <input type="text" id="messageInput" placeholder="Type your message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
   </div>
-</div>
 
-<script>
-  const chatButton = document.getElementById("chat-button");
-  const chatBox = document.getElementById("chat-box");
-  const messages = document.getElementById("chat-messages");
+  <script>
+    const chatButton = document.getElementById("chat-button");
+    const chatBox = document.getElementById("chat-box");
+    const messages = document.getElementById("chat-messages");
 
-  chatButton.onclick = () => {
-    chatBox.style.display = chatBox.style.display === "none" ? "flex" : "none";
-  };
+    chatButton.onclick = () => {
+      chatBox.style.display = chatBox.style.display === "none" ? "flex" : "none";
+    };
 
-  async function sendMessage() {
-    const input = document.getElementById("messageInput");
-    const userMessage = input.value;
-    if (!userMessage) return;
+    async function sendMessage() {
+      try {
+        const input = document.getElementById("messageInput");
+        const userMessage = input.value.trim();
+        if (!userMessage) return;
 
-    messages.innerHTML += `<div><strong>You:</strong> ${userMessage}</div>`;
-    input.value = "";
+        messages.innerHTML += `<div><strong>You:</strong> ${userMessage}</div>`;
+        input.value = "";
 
-    const res = await fetch("https://smarto21.onrender.com/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: userMessage })
-    });
+        const res = await fetch("https://smarto21.onrender.com/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: userMessage })
+        });
 
-    const data = await res.json();
-    messages.innerHTML += `<div><strong>James:</strong> ${data.reply}</div>`;
-    messages.scrollTop = messages.scrollHeight;
-  }
-</script>
+        if (!res.ok) {
+          throw new Error("Failed to get response");
+        }
 
+        const data = await res.json();
+        messages.innerHTML += `<div><strong>James:</strong> ${data.reply}</div>`;
+        messages.scrollTop = messages.scrollHeight;
+      } catch (error) {
+        messages.innerHTML += `<div><strong>Error:</strong> ${error.message}</div>`;
+      }
+    }
+  </script>
 </body>
 </html>
