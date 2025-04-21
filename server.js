@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const { OpenAI } = require("openai");
+const { Configuration, OpenAIApi } = require("openai");
 
 const app = express();
 const port = process.env.PORT || 10000;
@@ -9,9 +9,10 @@ const port = process.env.PORT || 10000;
 app.use(cors());
 app.use(bodyParser.json());
 
-const openai = new OpenAI({
+const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
+const openai = new OpenAIApi(configuration);
 
 app.get("/", (req, res) => {
   res.send("James Chatbot is running.");
@@ -20,11 +21,14 @@ app.get("/", (req, res) => {
 app.post("/chat", async (req, res) => {
   const userMessage = req.body.message;
   try {
-    const completion = await openai.chat.completions.create({
+    const completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: userMessage }],
+      messages: [
+        { role: "system", content: "You are James, a friendly customer service assistant." },
+        { role: "user", content: userMessage }
+      ],
     });
-    const reply = completion.choices[0].message.content;
+    const reply = completion.data.choices[0].message.content;
     res.json({ reply });
   } catch (err) {
     console.error("OpenAI error:", err);
