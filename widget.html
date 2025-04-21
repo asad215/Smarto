@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chatbot Widget</title>
+  <style>
+    html, body { height: 100%; margin: 0; font-family: Arial, sans-serif; }
+    .chat-widget { display: flex; flex-direction: column; height: 100%; width: 100%; box-sizing: border-box; }
+    .chat-header { background-color: #4CAF50; color: white; padding: 10px; text-align: center; font-weight: bold; }
+    .chat-messages { flex: 1; padding: 10px; overflow-y: auto; background: #f9f9f9; display: flex; flex-direction: column; align-items: flex-start; }
+    .message { margin: 5px 0; padding: 8px 12px; border-radius: 10px; max-width: 80%; word-break: break-word; }
+    .message.user { align-self: flex-end; background-color: #0084ff; color: white; border-radius: 10px 10px 0 10px; }
+    .message.bot { align-self: flex-start; background-color: #e4e6eb; color: #000; border-radius: 10px 10px 10px 0; }
+    .message.bot.typing { font-style: italic; opacity: 0.7; }
+    .chat-input-area { display: flex; border-top: 1px solid #ccc; }
+    .chat-input-area input { flex: 1; padding: 10px; font-size: 14px; border: none; outline: none; }
+    .chat-input-area button { background-color: #4CAF50; border: none; color: white; padding: 0 16px; font-size: 14px; cursor: pointer; }
+    .chat-input-area button:disabled { background-color: #9e9e9e; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+  <div class="chat-widget">
+    <div class="chat-header">Chat</div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-input-area">
+      <input type="text" id="chatInput" placeholder="Type a message..." autocomplete="off" />
+      <button id="sendBtn">Send</button>
+    </div>
+  </div>
+  <script>
+    const messagesContainer = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    function appendMessage(content, sender, isTyping=false) {
+      const msgDiv = document.createElement('div');
+      msgDiv.classList.add('message', sender);
+      if (sender === 'bot' && isTyping) {
+        msgDiv.classList.add('typing');
+        msgDiv.textContent = 'Bot is typing...';
+      } else {
+        msgDiv.textContent = content;
+      }
+      messagesContainer.appendChild(msgDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      return msgDiv;
+    }
+    function sendMessage() {
+      const userText = chatInput.value.trim();
+      if (!userText) return;
+      appendMessage(userText, 'user');
+      chatInput.value = '';
+      chatInput.disabled = true;
+      sendBtn.disabled = true;
+      const typingIndicator = appendMessage('', 'bot', true);
+      fetch('https://james-chatbot-2.onrender.com/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userText })
+      })
+      .then(response => response.text().then(text => {
+        try { return JSON.parse(text); } catch { return text; }
+      }))
+      .then(data => {
+        messagesContainer.removeChild(typingIndicator);
+        let botReply = typeof data === 'string' ? data :
+          data.reply || data.response || data.answer || data.message || JSON.stringify(data);
+        appendMessage(botReply, 'bot');
+      })
+      .catch(err => {
+        messagesContainer.removeChild(typingIndicator);
+        appendMessage('Error: Unable to get response.', 'bot');
+        console.error('Chat API error:', err);
+      })
+      .finally(() => {
+        chatInput.disabled = false;
+        sendBtn.disabled = false;
+      });
+    }
+    sendBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+  </script>
+</body>
+</html>
