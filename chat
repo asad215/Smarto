@@ -1,0 +1,48 @@
+const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const dotenv = require("dotenv");
+const { OpenAI } = require("openai");
+
+dotenv.config();
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.use(cors());
+app.use(bodyParser.json());
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+// Chat endpoint
+app.post("/chat", async (req, res) => {
+  try {
+    const { message } = req.body;
+
+    if (!message || typeof message !== "string") {
+      return res.status(400).json({ error: "Valid message is required" });
+    }
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "user", content: message }],
+    });
+
+    if (!completion.choices || completion.choices.length === 0) {
+      return res.status(500).json({ error: "Failed to get reply" });
+    }
+
+    const reply = completion.choices[0].message.content;
+    res.json({ reply });
+  } catch (error) {
+    console.error("Error:", error.message);
+    res.status(500).json({ error: "Failed to get reply" });
+  }
+});
+
+// Start server
+app.listen(port, () => {
+  console.log(`James bot is live at http://localhost:${port}`);
+});
