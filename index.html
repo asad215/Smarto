@@ -3,30 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chatbot Auto-Open Widget</title>
+  <title>Chatbot Button Embed</title>
   <style>
     body { margin: 0; font-family: Arial, sans-serif; }
-    #chat-container {
+    #chat-button {
       position: fixed;
       bottom: 20px;
+      right: 20px;
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 24px;
+      font-size: 14px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+    #chat-iframe {
+      position: fixed;
+      bottom: 70px;
       right: 20px;
       width: 350px;
       height: 450px;
       border: 1px solid #ccc;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.15);
-      z-index: 1000;
-    }
-    #chat-container iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
+      display: none;
+      z-index: 999;
     }
   </style>
 </head>
 <body>
-  <div id="chat-container">
-    <iframe src="widget.html" title="Chatbot Widget"></iframe>
-  </div>
+  <button id="chat-button">Chat with us</button>
+  <iframe id="chat-iframe" src="widget.html" title="Chatbot Widget"></iframe>
+
+  <script>
+    const btn = document.getElementById('chat-button');
+    const iframe = document.getElementById('chat-iframe');
+    btn.addEventListener('click', () => {
+      iframe.style.display = iframe.style.display === 'block' ? 'none' : 'block';
+    });
+  </script>
 </body>
 </html>
