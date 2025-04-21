@@ -1,11 +1,100 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>James Chatbot</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smarto Chat with James</title>
+  <style>
+    #chat-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      z-index: 1000;
+    }
+    #chat-box {
+      position: fixed;
+      bottom: 70px;
+      right: 20px;
+      width: 300px;
+      height: 400px;
+      background: white;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      display: none;
+      flex-direction: column;
+      z-index: 1000;
+    }
+    #chat-messages {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+    }
+    #chat-input {
+      display: flex;
+      border-top: 1px solid #ccc;
+    }
+    #chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 0 0 0 8px;
+    }
+    #chat-input button {
+      padding: 10px;
+      border: none;
+      background: #333;
+      color: white;
+      border-radius: 0 0 8px 0;
+    }
+  </style>
 </head>
 <body>
-  <h2>James is Ready to Chat!</h2>
-  <p>This server is now live and connected to GPT-3.5 Turbo.</p>
+
+<button id="chat-button">Chat with James</button>
+<div id="chat-box">
+  <div id="chat-messages"></div>
+  <div id="chat-input">
+    <input type="text" id="messageInput" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<script>
+  const chatButton = document.getElementById("chat-button");
+  const chatBox = document.getElementById("chat-box");
+  const messages = document.getElementById("chat-messages");
+
+  chatButton.onclick = () => {
+    chatBox.style.display = chatBox.style.display === "none" ? "flex" : "none";
+  };
+
+  async function sendMessage() {
+    const input = document.getElementById("messageInput");
+    const userMessage = input.value;
+    if (!userMessage) return;
+
+    messages.innerHTML += `<div><strong>You:</strong> ${userMessage}</div>`;
+    input.value = "";
+
+    const res = await fetch("https://smarto21.onrender.com/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: userMessage })
+    });
+
+    const data = await res.json();
+    messages.innerHTML += `<div><strong>James:</strong> ${data.reply}</div>`;
+    messages.scrollTop = messages.scrollHeight;
+  }
+</script>
+
 </body>
 </html>
