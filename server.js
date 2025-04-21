@@ -1,7 +1,8 @@
+
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const { OpenAI } = require("openai");
+const OpenAI = require("openai");
 
 const app = express();
 const port = process.env.PORT || 10000;
