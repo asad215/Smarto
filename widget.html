@@ -4,8 +4,11 @@
   <meta charset="UTF-8">
   <title>Chatbot Widget</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 10px; }
-    /* Chat messages area */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 10px;
+    }
     #messages {
       background: #f9f9f9;
       border: 1px solid #ccc;
@@ -15,46 +18,49 @@
       overflow-y: auto;
       margin-bottom: 10px;
     }
-    /* Input and send button styling */
-    #userInput { width: 80%; padding: 5px; }
-    #sendBtn { width: 18%; padding: 5px; }
-    /* Message paragraph styling */
-    #messages p { margin: 5px 0; }
-    /* Typing indicator style */
-    .typing { font-style: italic; color: #888; }
+    #userInput {
+      width: 80%;
+      padding: 5px;
+    }
+    #sendBtn {
+      width: 18%;
+      padding: 5px;
+    }
+    #messages p {
+      margin: 5px 0;
+    }
+    .typing {
+      font-style: italic;
+      color: #888;
+    }
   </style>
 </head>
 <body>
   <div id="chatContainer">
-    <!-- Messages will appear here -->
     <div id="messages"></div>
-    <!-- User input and send button -->
     <div>
-      <input type="text" id="userInput" placeholder="Type your message..." />
+      <input type="text" id="userInput" placeholder="Type your message...">
       <button id="sendBtn">Send</button>
     </div>
   </div>
-
   <script>
     const userInput = document.getElementById('userInput');
     const sendBtn = document.getElementById('sendBtn');
     const messagesDiv = document.getElementById('messages');
 
-    // Utility function to append a message to the chat display
     function appendMessage(text) {
       const p = document.createElement('p');
       p.textContent = text;
       messagesDiv.appendChild(p);
-      // Auto-scroll to the latest message
       messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
 
     function sendMessage() {
       const messageText = userInput.value.trim();
-      if (!messageText) return;  // Do nothing if input is empty
-      userInput.value = '';  // Clear the input field to avoid echoing the text
+      if (!messageText) return;
+      userInput.value = '';
+      appendMessage('You: ' + messageText);
 
-      // Show "James is typing..." indicator
       const typingIndicator = document.createElement('p');
       typingIndicator.textContent = 'James is typing...';
       typingIndicator.className = 'typing';
@@ -62,48 +68,30 @@
       messagesDiv.appendChild(typingIndicator);
       messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
-      // Send the POST request to the chatbot backend
       fetch('https://james-chatbot-2.onrender.com/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: messageText })
+        body: JSON.stringify({ message: messageText }),
       })
-      .then(response => {
-        if (!response.ok) {
-          // If HTTP response is not 200-299
-          throw new Error('Network response was not ok');
-        }
-        return response.text();  // Read response as text (assuming plaintext or JSON string)
-      })
+      .then(response => response.json())
       .then(data => {
-        // Remove the typing indicator now that a response was received
         const indicator = document.getElementById('typingIndicator');
         if (indicator) {
           indicator.remove();
         }
-        let reply = data;
-        // Handle empty or undefined reply
-        if (!reply || reply.trim() === '') {
-          reply = '...(no response)...';
-        }
-        // Display the chatbot's response
-        appendMessage('James says: ' + reply);
+        appendMessage('James says: ' + data.reply);
       })
       .catch(error => {
-        // Remove typing indicator on error as well
         const indicator = document.getElementById('typingIndicator');
         if (indicator) {
           indicator.remove();
         }
-        // Inform the user of a failure without technical details
         appendMessage('James says: [Error retrieving response]');
         console.error('Error:', error);
       });
     }
 
-    // Event listeners for sending message
     sendBtn.addEventListener('click', sendMessage);
-    // Allow pressing Enter to send the message
     userInput.addEventListener('keydown', function(event) {
       if (event.key === 'Enter') {
         event.preventDefault();
