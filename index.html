@@ -42,45 +42,46 @@
   </style>
 </head>
 <body>
-
-<div id="chatbox">
-  <div id="messages"></div>
-  <div id="inputArea">
-    <input type="text" id="messageInput" placeholder="Type your message..." />
-    <button id="sendBtn">Send</button>
+  <div id="chatbox">
+    <div id="messages"></div>
+    <div id="inputArea">
+      <input type="text" id="messageInput" placeholder="Type your message..." />
+      <button id="sendBtn">Send</button>
+    </div>
   </div>
-</div>
 
-<script>
-  const apiUrl = "https://james-chatbot.onrender.com/chat"; // Replace with your actual Render server URL
+  <script>
+    const apiUrl = "https://james-chatbot.onrender.com/chat";
+    const messagesDiv = document.getElementById("messages");
+    const input = document.getElementById("messageInput");
+    const button = document.getElementById("sendBtn");
 
-  const messagesDiv = document.getElementById("messages");
-  const input = document.getElementById("messageInput");
-  const button = document.getElementById("sendBtn");
+    button.onclick = async () => {
+      const userMessage = input.value.trim();
+      if (!userMessage) return;
 
-  button.onclick = async () => {
-    const userMessage = input.value.trim();
-    if (!userMessage) return;
+      messagesDiv.innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
+      input.value = "";
 
-    messagesDiv.innerHTML += <p><strong>You:</strong> ${userMessage}</p>;
-    input.value = "";
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: userMessage })
+        });
 
-    try {
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMessage })
-      });
+        if (!response.ok) {
+          throw new Error("Failed to fetch");
+        }
 
-      const data = await response.json();
-      messagesDiv.innerHTML += <p><strong>James:</strong> ${data.reply}</p>;
-    } catch (error) {
-      messagesDiv.innerHTML += <p><strong>Error:</strong> Failed to fetch</p>;
-    }
+        const data = await response.json();
+        messagesDiv.innerHTML += `<p><strong>James:</strong> ${data.reply}</p>`;
+      } catch (error) {
+        messagesDiv.innerHTML += `<p><strong>Error:</strong> ${error.message}</p>`;
+      }
 
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-  };
-</script>
-
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    };
+  </script>
 </body>
 </html>
