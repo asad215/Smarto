@@ -35,11 +35,7 @@
 </head>
 <body>
   <div class="content">
-    <div id="agent-profile">
-      <img src="james-profile.jpg" alt="James - AI Assistant">
-    </div>
-
-    <h1>Smarto.Space - AI Automation Solutions for Modern Businesses</h1>
+        <h1>Smarto.Space - AI Automation Solutions for Modern Businesses</h1>
     <p>Welcome to Smarto.Space, your gateway to next-generation automation.</p>
     <p>We specialize in building powerful AI-driven tools that help businesses grow faster, work smarter, and deliver top-tier customer experiences 24/7.</p>
 
@@ -75,9 +71,9 @@
     window.onload = function () {
       const chatWidget = document.createElement('div');
       chatWidget.innerHTML = `
-        <div style="position: fixed; bottom: 20px; right: 20px; background: #00f2ff; padding: 10px; border-radius: 10px; width: 300px; box-shadow: 0 0 10px #00f2ff; z-index: 9999;">
-          <strong>James - AI Assistant</strong>
-          <div id="chat-box" style="margin-top: 10px; background: #111; color: #fff; padding: 10px; border-radius: 5px; max-height: 200px; overflow-y: auto;"></div>
+        <div id="chat-widget" style="position: fixed; bottom: 20px; right: 20px; display: none; background: #00f2ff; padding: 10px; border-radius: 10px; width: 300px; height: 500px; box-shadow: 0 0 10px #00f2ff; z-index: 9999;">
+          <div style="display: flex; align-items: center; gap: 10px;"><img src="james-profile.jpg" alt="James" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid #000;"><span><strong>James - AI Assistant</strong></span></div>
+         <div id="chat-box" style="margin-top: 10px; background: #111; color: #fff; padding: 10px; border-radius: 5px; height: 350px; overflow-y: auto;"></div>
           <input id="chat-input" placeholder="Type your message..." style="width: 80%;" />
           <button onclick="sendMessage()">Send</button>
         </div>
@@ -97,7 +93,7 @@
       const message = input.value.trim();
       if (!message) return;
       const chatBox = document.getElementById('chat-box');
-      chatBox.innerHTML += `<div><strong>You:</strong> ${message}</div>`;
+      chatBox.innerHTML += `<div><strong>You:</strong> ${message}<button onclick="document.getElementById('chat-widget').style.display='none'" style="position: absolute; top: 5px; right: 10px; background: transparent; border: none; font-weight: bold;">×</button></div>`;
       input.value = '';
 
       try {
@@ -107,12 +103,19 @@
           body: JSON.stringify({ message })
         });
         const data = await res.json();
-        chatBox.innerHTML += `<div><strong>James:</strong> ${data.reply}</div>`;
+        chatBox.innerHTML += `<div><strong>James:</strong> ${data.reply}<button onclick="document.getElementById('chat-widget').style.display='none'" style="position: absolute; top: 5px; right: 10px; background: transparent; border: none; font-weight: bold;">×</button></div>`;
         chatBox.scrollTop = chatBox.scrollHeight;
       } catch {
-        chatBox.innerHTML += `<div><strong>James:</strong> Sorry, I can't respond right now.</div>`;
+        chatBox.innerHTML += `<div><strong>James:</strong> Sorry, I can't respond right now.<button onclick="document.getElementById('chat-widget').style.display='none'" style="position: absolute; top: 5px; right: 10px; background: transparent; border: none; font-weight: bold;">×</button></div>`;
       }
     }
   </script>
+
+<div style="position: fixed; bottom: 20px; right: 20px; z-index: 9998;">
+  <button onclick="document.getElementById('chat-widget').style.display='block'"
+          style="background: #00f2ff; color: #000; padding: 10px 15px; border-radius: 10px; border: none; cursor: pointer;">
+    Chat with us
+  </button>
+</div>
 </body>
 </html>
