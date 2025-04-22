@@ -1,64 +1,196 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Smarto.Space - AI Automation</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #0f0f0f;
-            color: #00ffe1;
-            padding: 20px;
-        }
-        .content {
-            max-width: 900px;
-            margin: auto;
-        }
-        h1 {
-            color: #00ffe1;
-        }
-        ul {
-            line-height: 1.6;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Smarto.Space - AI Automation</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(120deg, #000000, #0c1830);
+      color: #ffffff;
+      padding-bottom: 100px;
+    }
+    header {
+      background-color: #101f3c;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      color: #00f2ff;
+      font-size: 2em;
+    }
+    .content {
+      max-width: 900px;
+      margin: 40px auto;
+      line-height: 1.8;
+      font-size: 1.1em;
+    }
+    .highlight {
+      color: #00f2ff;
+      font-weight: bold;
+    }
+
+    /* Chat Widget */
+    #chat-widget {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 300px;
+      background-color: #1e2a3a;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      overflow: hidden;
+      z-index: 9999;
+    }
+    #chat-header {
+      background-color: #00f2ff;
+      padding: 10px;
+      color: #000;
+      font-weight: bold;
+      text-align: center;
+    }
+    #chat-messages {
+      height: 250px;
+      padding: 10px;
+      overflow-y: auto;
+      background-color: #15222e;
+    }
+    .message {
+      margin: 8px 0;
+    }
+    .user-message {
+      text-align: right;
+      color: #aadfff;
+    }
+    .bot-message {
+      text-align: left;
+      color: #d6f8ff;
+    }
+    #chat-input {
+      display: flex;
+      border-top: 1px solid #333;
+    }
+    #chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      outline: none;
+      background-color: #0f1a26;
+      color: white;
+    }
+    #chat-input button {
+      padding: 10px;
+      background-color: #00f2ff;
+      border: none;
+      cursor: pointer;
+      color: #000;
+      font-weight: bold;
+    }
+    #agent-profile {
+      text-align: center;
+      margin-top: 10px;
+    }
+    #agent-profile img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid #00f2ff;
+    }
+    .typing {
+      font-style: italic;
+      color: #7fdfff;
+    }
+  </style>
 </head>
 <body>
-    <div class="content">
-        <h1>Smarto.Space - AI Automation Solutions for Modern Businesses</h1>
-        <p>Welcome to Smarto.Space, your gateway to next-generation automation.</p>
-        <p>We specialize in building powerful AI-driven tools that help businesses grow faster, work smarter, and deliver top-tier customer experiences 24/7.</p>
 
-        <h2>Our Solutions Include:</h2>
-        <ul>
-            <li><strong>James AI Chatbot:</strong> 24/7 virtual assistant for live support, lead generation, and inquiries.</li>
-            <li><strong>AI Voice Agents:</strong> Realistic voice agents for sales and support calls.</li>
-            <li><strong>Custom Automation Workflows:</strong> Full tool integration including CRM, email, WhatsApp, and more.</li>
-        </ul>
+  <header>
+    <h1>Smarto.Space - AI Automation Solutions for Modern Businesses</h1>
+  </header>
 
-        <h2>Why Choose Smarto.Space?</h2>
-        <ul>
-            <li>Lightning-fast setup with zero coding</li>
-            <li>Stylish chatbot widget with your logo and greeting</li>
-            <li>Scalable across unlimited client websites</li>
-            <li>Affordable plans for startups & enterprises</li>
-            <li>Free hosting, updates, and support</li>
-        </ul>
+  <div class="content">
+    <p>Welcome to <span class="highlight">Smarto.Space</span>, your gateway to next-generation automation.</p>
+    <p>We specialize in building powerful AI-driven tools that help businesses grow faster, work smarter, and deliver top-tier customer experiences 24/7.</p>
 
-        <h2>Try Us Free!</h2>
-        <p>We’re offering a <strong>2-Day Free Trial</strong> to experience Smarto in action.</p>
+    <h3>Our Solutions Include:</h3>
+    <ul>
+      <li><span class="highlight">James AI Chatbot:</span> 24/7 virtual assistant for support, leads & FAQs.</li>
+      <li><span class="highlight">AI Voice Agents:</span> Human-like voices for calls, sales, and support.</li>
+      <li><span class="highlight">Custom Workflows:</span> Fully automated CRM, email, WhatsApp integrations.</li>
+    </ul>
 
-        <h2>Powered by OpenAI GPT-3.5 Turbo</h2>
-        <p>Natural, accurate conversations—powered by the latest tech.</p>
+    <h3>Why Choose Smarto.Space?</h3>
+    <ul>
+      <li>Stylish branded widget with your logo & greeting</li>
+      <li>Scalable for unlimited websites</li>
+      <li>Free hosting, updates, and 24/7 support</li>
+    </ul>
 
-        <h2>Contact & Support</h2>
-        <p>Chat with our AI assistant James anytime via the bottom-right corner!</p>
+    <p class="highlight">Try Us Free for 2 Days. No commitment. Just results.</p>
+    <p><strong>Powered by OpenAI GPT-3.5 Turbo</strong> for natural, intelligent conversations.</p>
+  </div>
 
-        <p><strong>Smarto.Space</strong> — Smarter conversations. Smarter conversions.</p>
+  <!-- James Chatbot Widget -->
+  <div id="chat-widget">
+    <div id="chat-header">
+      <div id="agent-profile">
+        <img src="james.jpg" alt="James">
+      </div>
+      James - AI Assistant
     </div>
+    <div id="chat-messages">
+      <div class="bot-message">James: Hello! How can I assist you today?</div>
+    </div>
+    <div id="chat-input">
+      <input id="userInput" type="text" placeholder="Type your message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
 
-    <!-- James chatbot widget embed (unchanged) -->
-    <script src="bot.js"></script>
+  <script>
+    const input = document.getElementById('userInput');
+    const chatMessages = document.getElementById('chat-messages');
+
+    input.addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        sendMessage();
+      }
+    });
+
+    function appendMessage(message, sender) {
+      const div = document.createElement("div");
+      div.classList.add("message");
+      div.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+      div.textContent = ${sender === 'user' ? 'You' : 'James'}: ${message};
+      chatMessages.appendChild(div);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    async function sendMessage() {
+      const text = input.value.trim();
+      if (!text) return;
+      appendMessage(text, "user");
+      input.value = "";
+      appendMessage("James is typing...", "bot");
+      try {
+        const response = await fetch("https://james-chatbot-2.onrender.com/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ message: text })
+        });
+        const data = await response.json();
+        chatMessages.lastChild.remove();
+        appendMessage(data.reply, "bot");
+      } catch (err) {
+        chatMessages.lastChild.remove();
+        appendMessage("Sorry, James is unavailable.", "bot");
+      }
+    }
+  </script>
+
 </body>
 </html>
