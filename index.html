@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,22 +7,31 @@
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
       color: #ffffff;
     }
+
     .container {
       padding: 60px;
       max-width: 1000px;
       margin: auto;
     }
+
     h1, h2 {
       color: #00ffd5;
     }
+
+    ul {
+      padding-left: 20px;
+    }
+
     .highlight {
       color: #00ffd5;
       font-weight: bold;
     }
+
+    /* Chatbot Widget */
     #chatWidget {
       position: fixed;
       bottom: 20px;
@@ -37,6 +45,7 @@
       overflow: hidden;
       z-index: 1000;
     }
+
     #chatHeader {
       background-color: #00ffd5;
       color: #000;
@@ -44,6 +53,7 @@
       font-weight: bold;
       text-align: center;
     }
+
     #chatMessages {
       flex: 1;
       padding: 12px;
@@ -51,11 +61,13 @@
       overflow-y: auto;
       background-color: #2b3a50;
     }
+
     #chatInputArea {
       display: flex;
       border-top: 1px solid #444;
       background-color: #1e2a38;
     }
+
     #chatInput {
       flex: 1;
       border: none;
@@ -64,6 +76,7 @@
       background: none;
       color: white;
     }
+
     #chatSend {
       background-color: #00ffd5;
       border: none;
@@ -72,6 +85,7 @@
       font-weight: bold;
       color: #000;
     }
+
     #chatToggleBtn {
       position: fixed;
       bottom: 20px;
@@ -85,21 +99,37 @@
       cursor: pointer;
       z-index: 999;
     }
-    .profile-pic {
-      width: 120px;
-      border-radius: 100%;
-      display: block;
-      margin: 20px auto;
-      border: 4px solid #00ffd5;
-    }
   </style>
 </head>
 <body>
   <div class="container">
-    <img src="james_profile.jpg" alt="James Profile Picture" class="profile-pic" />
     <h1>Welcome to Smarto – AI Automation Solutions for the Future</h1>
     <p><span class="highlight">At Smarto</span>, we empower businesses with the latest advancements in AI technology.</p>
     <p>Our automation tools are powered by the <span class="highlight">latest GPT-4 Turbo</span>, delivering ultra-fast, accurate, and natural conversations—just like a real human.</p>
+    <ul>
+      <li>Streamline daily operations</li>
+      <li>Boost customer support</li>
+      <li>Close more sales</li>
+      <li>Generate high-quality leads</li>
+    </ul>
+
+    <h2>What We Offer</h2>
+    <ul>
+      <li><span class="highlight">Smart AI Chatbots (like James)</span> – Available 24/7 to answer questions, guide users, and capture leads—fully branded to your business.</li>
+      <li><span class="highlight">Real Human-like AI Voice Agents</span> – Handle sales and customer service calls with natural human-quality voices.</li>
+      <li><span class="highlight">Website Automation Widgets</span> – Popup widgets that convert your traffic into customers.</li>
+      <li><span class="highlight">AI Integration & Consulting</span> – We fully automate your business with tailored AI solutions.</li>
+    </ul>
+
+    <h2>Why Choose Smarto?</h2>
+    <ul>
+      <li>Powered by <span class="highlight">GPT-4 Turbo – The fastest, smartest model yet</span></li>
+      <li>Fully Branded Chat & Voice Bots</li>
+      <li>Professional, Custom Integration</li>
+      <li>Live Support Anytime You Need</li>
+      <li>Affordable for all business sizes</li>
+    </ul>
+
     <h2>Start with a 2-Day Free Trial!</h2>
     <p>Try our bots with no risk—no payment needed. Experience the power of AI automation for your business today.</p>
   </div>
@@ -145,6 +175,7 @@
       }
     });
 
+    // Auto open after 2 seconds
     window.onload = () => {
       setTimeout(() => {
         chatWidget.style.display = "flex";
