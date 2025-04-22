@@ -1,109 +1,73 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>James Chat Widget</title>
-  <style>
-    body { background-color: #111; font-family: Arial, sans-serif; color: #eee; }
-    #chat-container {
-      width: 300px;
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #1e1e1e;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,255,255,0.3);
-      overflow: hidden;
-      border: 2px solid #00ffff;
-    }
-    #chat-header {
-      background: #00ffff;
-      color: #111;
-      padding: 10px;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    #chat-header img {
-      height: 30px;
-      border-radius: 50%;
-    }
-    #chat-messages {
-      max-height: 300px;
-      overflow-y: auto;
-      padding: 10px;
-    }
-    .message { margin-bottom: 10px; }
-    .user { text-align: right; color: #9df; }
-    .assistant { text-align: left; color: #afa; }
-    #chat-input {
-      display: flex;
-      border-top: 1px solid #444;
-    }
-    #chat-input input {
-      flex-grow: 1;
-      padding: 10px;
-      background: #222;
-      border: none;
-      color: #fff;
-    }
-    #chat-input button {
-      background: #00ffff;
-      border: none;
-      padding: 10px;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Smarto.Space - AI Automation Solutions</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            max-width: 900px;
+            margin: 40px auto;
+            border-radius: 10px;
+        }
+        h1 {
+            font-size: 36px;
+            color: #00ffff;
+        }
+        h2 {
+            color: #00ffff;
+        }
+        ul {
+            list-style: square;
+            padding-left: 20px;
+        }
+        .tagline {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-  <div id="chat-container">
-    <div id="chat-header">
-      <img src="james.jpg" alt="James">
-      James
+    <div class="overlay">
+        <h1>Smarto.Space - AI Automation Solutions for Modern Businesses</h1>
+        <p class="tagline">Smarter conversations. Smarter conversions.</p>
+
+        <p>Welcome to Smarto.Space, your gateway to next-generation automation.</p>
+        <p>We specialize in building powerful AI-driven tools that help businesses grow faster, work smarter, and deliver top-tier customer experiences 24/7.</p>
+
+        <h2>Our Solutions Include:</h2>
+        <ul>
+            <li><strong>James AI Chatbot:</strong> Your 24/7 virtual assistant for support, lead generation, and general inquiries.</li>
+            <li><strong>AI Voice Agents:</strong> Realistic voice AI for full sales calls, scheduling, and support.</li>
+            <li><strong>Custom Automation Workflows:</strong> Integrate CRM, email, WhatsApp, and more into one smart system.</li>
+        </ul>
+
+        <h2>Why Choose Smarto.Space?</h2>
+        <ul>
+            <li>Lightning-fast setup with zero coding</li>
+            <li>Stylish chatbot widget with branding and custom greetings</li>
+            <li>Scalable on unlimited client websites</li>
+            <li>Affordable for startups and enterprises</li>
+            <li>Free hosting, updates, and full support</li>
+        </ul>
+
+        <h2>Try Us Free!</h2>
+        <p>We’re offering a <strong>2-Day Free Trial</strong> to experience Smarto in action. No commitment, just results.</p>
+
+        <h2>Powered by OpenAI GPT-3.5 Turbo</h2>
+        <p>Smarto.Space is backed by the latest language model from OpenAI to deliver natural, accurate, and helpful conversations.</p>
+
+        <h2>Contact & Support</h2>
+        <p>Our AI assistant James is available 24/7 in the bottom-right corner. For custom inquiries, drop us a message through the chat!</p>
     </div>
-    <div id="chat-messages"></div>
-    <div id="chat-input">
-      <input type="text" id="message-input" placeholder="Type your message...">
-      <button onclick="sendMessage()">Send</button>
-    </div>
-  </div>
-
-  <script>
-    const messageInput = document.getElementById("message-input");
-    messageInput.addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
-        sendMessage();
-      }
-    });
-
-    function appendMessage(text, className) {
-      const messageDiv = document.createElement("div");
-      messageDiv.className = "message " + className;
-      messageDiv.textContent = text;
-      document.getElementById("chat-messages").appendChild(messageDiv);
-      document.getElementById("chat-messages").scrollTop = document.getElementById("chat-messages").scrollHeight;
-    }
-
-    async function sendMessage() {
-      const text = messageInput.value.trim();
-      if (!text) return;
-      appendMessage("You: " + text, "user");
-      messageInput.value = "";
-
-      try {
-        const response = await fetch("https://james-chatbot-2.onrender.com/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: text })
-        });
-        const data = await response.json();
-        appendMessage("James: " + (data.reply || "No reply"), "assistant");
-      } catch (error) {
-        appendMessage("James: Sorry, I can't respond right now.", "assistant");
-      }
-    }
-  </script>
 </body>
 </html>
