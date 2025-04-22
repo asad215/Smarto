@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smarto.Space - AI Automation</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0a0a0a;
+      color: #00f2ff;
+      padding: 20px;
+    }
+    .content {
+      max-width: 900px;
+      margin: auto;
+    }
+    h1, h2 {
+      color: #00f2ff;
+    }
+    ul {
+      line-height: 1.6;
+    }
+    #agent-profile {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    #agent-profile img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid #00f2ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+        <h1>Smarto.Space - AI Automation Solutions for Modern Businesses</h1>
+    <p>Welcome to Smarto.Space, your gateway to next-generation automation.</p>
+    <p>We specialize in building powerful AI-driven tools that help businesses grow faster, work smarter, and deliver top-tier customer experiences 24/7.</p>
+
+    <h2>Our Solutions Include:</h2>
+    <ul>
+      <li><strong>James AI Chatbot:</strong> 24/7 virtual assistant for live support, lead generation, and inquiries.</li>
+      <li><strong>AI Voice Agents:</strong> Realistic voice agents for sales and support calls.</li>
+      <li><strong>Custom Automation Workflows:</strong> Full tool integration including CRM, email, WhatsApp, and more.</li>
+    </ul>
+
+    <h2>Why Choose Smarto.Space?</h2>
+    <ul>
+      <li>Lightning-fast setup with zero coding</li>
+      <li>Stylish chatbot widget with your logo and greeting</li>
+      <li>Scalable across unlimited client websites</li>
+      <li>Affordable plans for startups & enterprises</li>
+      <li>Free hosting, updates, and support</li>
+    </ul>
+
+    <h2>Try Us Free!</h2>
+    <p>We’re offering a <strong>2-Day Free Trial</strong> to experience Smarto in action.</p>
+
+    <h2>Powered by the Latest GPT</h2>
+    <p>Natural, accurate conversations—powered by the latest OpenAI language model.</p>
+
+    <h2>Contact & Support</h2>
+    <p>Chat with our AI assistant James anytime via the bottom-right corner!</p>
+
+    <p><strong>Smarto.Space</strong> — Smarter conversations. Smarter conversions.</p>
+  </div>
+
+  <script>
+    window.onload = function () {
+      const chatWidget = document.createElement('div');
+      chatWidget.innerHTML = `
+        <div id="chat-widget" style="position: fixed; bottom: 20px; right: 20px; display: none; background: #00f2ff; padding: 10px; border-radius: 10px; width: 300px; box-shadow: 0 0 10px #00f2ff; z-index: 9999;">
+          <div style="display: flex; align-items: center; gap: 10px;"><img src="james-profile.jpg" alt="James" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid #000;"><span><strong>James - AI Assistant</strong></span></div>
+          <div id="chat-box" style="margin-top: 10px; background: #111; color: #fff; padding: 10px; border-radius: 5px; max-height: 200px; overflow-y: auto;"></div>
+          <input id="chat-input" placeholder="Type your message..." style="width: 80%;" />
+          <button onclick="sendMessage()">Send</button>
+        </div>
+      `;
+      document.body.appendChild(chatWidget);
+
+      const input = document.getElementById('chat-input');
+      input.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+          sendMessage();
+        }
+      });
+    };
+
+    async function sendMessage() {
+      const input = document.getElementById('chat-input');
+      const message = input.value.trim();
+      if (!message) return;
+      const chatBox = document.getElementById('chat-box');
+      chatBox.innerHTML += `<div><strong>You:</strong> ${message}<button onclick="document.getElementById('chat-widget').style.display='none'" style="position: absolute; top: 5px; right: 10px; background: transparent; border: none; font-weight: bold;">×</button></div>`;
+      input.value = '';
+
+      try {
+       const res = await fetch('https://james-chatbot-2.onrender.com/chat', {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify({ message })
+});
+        const data = await res.json();
+        chatBox.innerHTML += `<div><strong>James:</strong> ${data.reply}<button onclick="document.getElementById('chat-widget').style.display='none'" style="position: absolute; top: 5px; right: 10px; background: transparent; border: none; font-weight: bold;">×</button></div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+      } catch {
+        chatBox.innerHTML += `<div><strong>James:</strong> Sorry, I can't respond right now.<button onclick="document.getElementById('chat-widget').style.display='none'" style="position: absolute; top: 5px; right: 10px; background: transparent; border: none; font-weight: bold;">×</button></div>`;
+      }
+    }
+  </script>
+
+<div style="position: fixed; bottom: 20px; right: 20px; z-index: 9998;">
+  <button onclick="document.getElementById('chat-widget').style.display='block'"
+          style="background: #00f2ff; color: #000; padding: 10px 15px; border-radius: 10px; border: none; cursor: pointer;">
+    Chat with us
+  </button>
+</div>
+</body>
+</html>
