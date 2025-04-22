@@ -7,190 +7,112 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(120deg, #000000, #0c1830);
-      color: #ffffff;
-      padding-bottom: 100px;
-    }
-    header {
-      background-color: #101f3c;
-      padding: 20px;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
+      background-color: #0a0a0a;
       color: #00f2ff;
-      font-size: 2em;
+      padding: 20px;
     }
     .content {
       max-width: 900px;
-      margin: 40px auto;
-      line-height: 1.8;
-      font-size: 1.1em;
+      margin: auto;
     }
-    .highlight {
+    h1, h2 {
       color: #00f2ff;
-      font-weight: bold;
     }
-
-    /* Chat Widget */
-    #chat-widget {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 300px;
-      background-color: #1e2a3a;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
-      overflow: hidden;
-      z-index: 9999;
-    }
-    #chat-header {
-      background-color: #00f2ff;
-      padding: 10px;
-      color: #000;
-      font-weight: bold;
-      text-align: center;
-    }
-    #chat-messages {
-      height: 250px;
-      padding: 10px;
-      overflow-y: auto;
-      background-color: #15222e;
-    }
-    .message {
-      margin: 8px 0;
-    }
-    .user-message {
-      text-align: right;
-      color: #aadfff;
-    }
-    .bot-message {
-      text-align: left;
-      color: #d6f8ff;
-    }
-    #chat-input {
-      display: flex;
-      border-top: 1px solid #333;
-    }
-    #chat-input input {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      outline: none;
-      background-color: #0f1a26;
-      color: white;
-    }
-    #chat-input button {
-      padding: 10px;
-      background-color: #00f2ff;
-      border: none;
-      cursor: pointer;
-      color: #000;
-      font-weight: bold;
+    ul {
+      line-height: 1.6;
     }
     #agent-profile {
       text-align: center;
-      margin-top: 10px;
+      margin-bottom: 20px;
     }
     #agent-profile img {
-      width: 50px;
-      height: 50px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
-      border: 2px solid #00f2ff;
-    }
-    .typing {
-      font-style: italic;
-      color: #7fdfff;
+      border: 3px solid #00f2ff;
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <h1>Smarto.Space - AI Automation Solutions for Modern Businesses</h1>
-  </header>
-
   <div class="content">
-    <p>Welcome to <span class="highlight">Smarto.Space</span>, your gateway to next-generation automation.</p>
+    <div id="agent-profile">
+      <img src="james-profile.jpg" alt="James - AI Assistant">
+    </div>
+
+    <h1>Smarto.Space - AI Automation Solutions for Modern Businesses</h1>
+    <p>Welcome to Smarto.Space, your gateway to next-generation automation.</p>
     <p>We specialize in building powerful AI-driven tools that help businesses grow faster, work smarter, and deliver top-tier customer experiences 24/7.</p>
 
-    <h3>Our Solutions Include:</h3>
+    <h2>Our Solutions Include:</h2>
     <ul>
-      <li><span class="highlight">James AI Chatbot:</span> 24/7 virtual assistant for support, leads & FAQs.</li>
-      <li><span class="highlight">AI Voice Agents:</span> Human-like voices for calls, sales, and support.</li>
-      <li><span class="highlight">Custom Workflows:</span> Fully automated CRM, email, WhatsApp integrations.</li>
+      <li><strong>James AI Chatbot:</strong> 24/7 virtual assistant for live support, lead generation, and inquiries.</li>
+      <li><strong>AI Voice Agents:</strong> Realistic voice agents for sales and support calls.</li>
+      <li><strong>Custom Automation Workflows:</strong> Full tool integration including CRM, email, WhatsApp, and more.</li>
     </ul>
 
-    <h3>Why Choose Smarto.Space?</h3>
+    <h2>Why Choose Smarto.Space?</h2>
     <ul>
-      <li>Stylish branded widget with your logo & greeting</li>
-      <li>Scalable for unlimited websites</li>
-      <li>Free hosting, updates, and 24/7 support</li>
+      <li>Lightning-fast setup with zero coding</li>
+      <li>Stylish chatbot widget with your logo and greeting</li>
+      <li>Scalable across unlimited client websites</li>
+      <li>Affordable plans for startups & enterprises</li>
+      <li>Free hosting, updates, and support</li>
     </ul>
 
-    <p class="highlight">Try Us Free for 2 Days. No commitment. Just results.</p>
-    <p><strong>Powered by OpenAI GPT-3.5 Turbo</strong> for natural, intelligent conversations.</p>
-  </div>
+    <h2>Try Us Free!</h2>
+    <p>We’re offering a <strong>2-Day Free Trial</strong> to experience Smarto in action.</p>
 
-  <!-- James Chatbot Widget -->
-  <div id="chat-widget">
-    <div id="chat-header">
-      <div id="agent-profile">
-        <img src="james.jpg" alt="James">
-      </div>
-      James - AI Assistant
-    </div>
-    <div id="chat-messages">
-      <div class="bot-message">James: Hello! How can I assist you today?</div>
-    </div>
-    <div id="chat-input">
-      <input id="userInput" type="text" placeholder="Type your message..." />
-      <button onclick="sendMessage()">Send</button>
-    </div>
+    <h2>Powered by the Latest GPT</h2>
+    <p>Natural, accurate conversations—powered by the latest OpenAI language model.</p>
+
+    <h2>Contact & Support</h2>
+    <p>Chat with our AI assistant James anytime via the bottom-right corner!</p>
+
+    <p><strong>Smarto.Space</strong> — Smarter conversations. Smarter conversions.</p>
   </div>
 
   <script>
-    const input = document.getElementById('userInput');
-    const chatMessages = document.getElementById('chat-messages');
+    window.onload = function () {
+      const chatWidget = document.createElement('div');
+      chatWidget.innerHTML = `
+        <div style="position: fixed; bottom: 20px; right: 20px; background: #00f2ff; padding: 10px; border-radius: 10px; width: 300px; box-shadow: 0 0 10px #00f2ff; z-index: 9999;">
+          <strong>James - AI Assistant</strong>
+          <div id="chat-box" style="margin-top: 10px; background: #111; color: #fff; padding: 10px; border-radius: 5px; max-height: 200px; overflow-y: auto;"></div>
+          <input id="chat-input" placeholder="Type your message..." style="width: 80%;" />
+          <button onclick="sendMessage()">Send</button>
+        </div>
+      `;
+      document.body.appendChild(chatWidget);
 
-    input.addEventListener("keypress", function(event) {
-      if (event.key === "Enter") {
-        sendMessage();
-      }
-    });
-
-    function appendMessage(message, sender) {
-      const div = document.createElement("div");
-      div.classList.add("message");
-      div.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
-      div.textContent = ${sender === 'user' ? 'You' : 'James'}: ${message};
-      chatMessages.appendChild(div);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
+      const input = document.getElementById('chat-input');
+      input.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+          sendMessage();
+        }
+      });
+    };
 
     async function sendMessage() {
-      const text = input.value.trim();
-      if (!text) return;
-      appendMessage(text, "user");
-      input.value = "";
-      appendMessage("James is typing...", "bot");
+      const input = document.getElementById('chat-input');
+      const message = input.value.trim();
+      if (!message) return;
+      const chatBox = document.getElementById('chat-box');
+      chatBox.innerHTML += `<div><strong>You:</strong> ${message}</div>`;
+      input.value = '';
+
       try {
-        const response = await fetch("https://james-chatbot-2.onrender.com/chat", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ message: text })
+        const res = await fetch('https://james-chatbot-2.onrender.com/chat', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ message })
         });
-        const data = await response.json();
-        chatMessages.lastChild.remove();
-        appendMessage(data.reply, "bot");
-      } catch (err) {
-        chatMessages.lastChild.remove();
-        appendMessage("Sorry, James is unavailable.", "bot");
+        const data = await res.json();
+        chatBox.innerHTML += `<div><strong>James:</strong> ${data.reply}</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+      } catch {
+        chatBox.innerHTML += `<div><strong>James:</strong> Sorry, I can't respond right now.</div>`;
       }
     }
   </script>
-
 </body>
 </html>
