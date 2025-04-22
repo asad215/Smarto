@@ -1,186 +1,109 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smarto - AI Automation Solutions</title>
+  <meta charset="UTF-8">
+  <title>James Chat Widget</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #ffffff;
-    }
-
-    .container {
-      padding: 60px;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    h1, h2 {
-      color: #00ffd5;
-    }
-
-    ul {
-      padding-left: 20px;
-    }
-
-    .highlight {
-      color: #00ffd5;
-      font-weight: bold;
-    }
-
-    /* Chatbot Widget */
-    #chatWidget {
+    body { background-color: #111; font-family: Arial, sans-serif; color: #eee; }
+    #chat-container {
+      width: 300px;
       position: fixed;
       bottom: 20px;
       right: 20px;
-      background-color: #1e2a38;
-      border-radius: 20px;
-      box-shadow: 0 0 10px #00ffd5;
-      width: 320px;
-      display: none;
-      flex-direction: column;
+      background: #1e1e1e;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,255,255,0.3);
       overflow: hidden;
-      z-index: 1000;
+      border: 2px solid #00ffff;
     }
-
-    #chatHeader {
-      background-color: #00ffd5;
-      color: #000;
-      padding: 12px;
+    #chat-header {
+      background: #00ffff;
+      color: #111;
+      padding: 10px;
       font-weight: bold;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-
-    #chatMessages {
-      flex: 1;
-      padding: 12px;
-      height: 250px;
+    #chat-header img {
+      height: 30px;
+      border-radius: 50%;
+    }
+    #chat-messages {
+      max-height: 300px;
       overflow-y: auto;
-      background-color: #2b3a50;
+      padding: 10px;
     }
-
-    #chatInputArea {
+    .message { margin-bottom: 10px; }
+    .user { text-align: right; color: #9df; }
+    .assistant { text-align: left; color: #afa; }
+    #chat-input {
       display: flex;
       border-top: 1px solid #444;
-      background-color: #1e2a38;
     }
-
-    #chatInput {
-      flex: 1;
+    #chat-input input {
+      flex-grow: 1;
+      padding: 10px;
+      background: #222;
+      border: none;
+      color: #fff;
+    }
+    #chat-input button {
+      background: #00ffff;
       border: none;
       padding: 10px;
-      font-size: 14px;
-      background: none;
-      color: white;
-    }
-
-    #chatSend {
-      background-color: #00ffd5;
-      border: none;
-      padding: 10px 16px;
       cursor: pointer;
-      font-weight: bold;
-      color: #000;
-    }
-
-    #chatToggleBtn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #00ffd5;
-      color: black;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 30px;
-      font-weight: bold;
-      cursor: pointer;
-      z-index: 999;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Welcome to Smarto – AI Automation Solutions for the Future</h1>
-    <p><span class="highlight">At Smarto</span>, we empower businesses with the latest advancements in AI technology.</p>
-    <p>Our automation tools are powered by the <span class="highlight">latest GPT-4 Turbo</span>, delivering ultra-fast, accurate, and natural conversations—just like a real human.</p>
-    <ul>
-      <li>Streamline daily operations</li>
-      <li>Boost customer support</li>
-      <li>Close more sales</li>
-      <li>Generate high-quality leads</li>
-    </ul>
-
-    <h2>What We Offer</h2>
-    <ul>
-      <li><span class="highlight">Smart AI Chatbots (like James)</span> – Available 24/7 to answer questions, guide users, and capture leads—fully branded to your business.</li>
-      <li><span class="highlight">Real Human-like AI Voice Agents</span> – Handle sales and customer service calls with natural human-quality voices.</li>
-      <li><span class="highlight">Website Automation Widgets</span> – Popup widgets that convert your traffic into customers.</li>
-      <li><span class="highlight">AI Integration & Consulting</span> – We fully automate your business with tailored AI solutions.</li>
-    </ul>
-
-    <h2>Why Choose Smarto?</h2>
-    <ul>
-      <li>Powered by <span class="highlight">GPT-4 Turbo – The fastest, smartest model yet</span></li>
-      <li>Fully Branded Chat & Voice Bots</li>
-      <li>Professional, Custom Integration</li>
-      <li>Live Support Anytime You Need</li>
-      <li>Affordable for all business sizes</li>
-    </ul>
-
-    <h2>Start with a 2-Day Free Trial!</h2>
-    <p>Try our bots with no risk—no payment needed. Experience the power of AI automation for your business today.</p>
-  </div>
-
-  <div id="chatWidget">
-    <div id="chatHeader">James - AI Assistant</div>
-    <div id="chatMessages">
-      <div style="margin-bottom: 10px;">James: Hello! How can I assist you today?</div>
+  <div id="chat-container">
+    <div id="chat-header">
+      <img src="james.jpg" alt="James">
+      James
     </div>
-    <div id="chatInputArea">
-      <input type="text" id="chatInput" placeholder="Type your message..." />
-      <button id="chatSend">Send</button>
+    <div id="chat-messages"></div>
+    <div id="chat-input">
+      <input type="text" id="message-input" placeholder="Type your message...">
+      <button onclick="sendMessage()">Send</button>
     </div>
   </div>
-  <button id="chatToggleBtn">Chat with James</button>
 
   <script>
-    const chatWidget = document.getElementById("chatWidget");
-    const toggleBtn = document.getElementById("chatToggleBtn");
-    const sendBtn = document.getElementById("chatSend");
-    const input = document.getElementById("chatInput");
-    const messages = document.getElementById("chatMessages");
-
-    toggleBtn.addEventListener("click", () => {
-      chatWidget.style.display = chatWidget.style.display === "flex" ? "none" : "flex";
-    });
-
-    sendBtn.addEventListener("click", () => {
-      const text = input.value.trim();
-      if (text) {
-        const userMsg = document.createElement("div");
-        userMsg.textContent = `You: ${text}`;
-        userMsg.style.marginBottom = '10px';
-        messages.appendChild(userMsg);
-
-        const reply = document.createElement("div");
-        reply.textContent = `James: Thank you for your message! (demo)`;
-        reply.style.marginBottom = '10px';
-        messages.appendChild(reply);
-
-        input.value = "";
-        messages.scrollTop = messages.scrollHeight;
+    const messageInput = document.getElementById("message-input");
+    messageInput.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        sendMessage();
       }
     });
 
-    // Auto open after 2 seconds
-    window.onload = () => {
-      setTimeout(() => {
-        chatWidget.style.display = "flex";
-      }, 2000);
-    };
+    function appendMessage(text, className) {
+      const messageDiv = document.createElement("div");
+      messageDiv.className = "message " + className;
+      messageDiv.textContent = text;
+      document.getElementById("chat-messages").appendChild(messageDiv);
+      document.getElementById("chat-messages").scrollTop = document.getElementById("chat-messages").scrollHeight;
+    }
+
+    async function sendMessage() {
+      const text = messageInput.value.trim();
+      if (!text) return;
+      appendMessage("You: " + text, "user");
+      messageInput.value = "";
+
+      try {
+        const response = await fetch("https://james-chatbot-2.onrender.com/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: text })
+        });
+        const data = await response.json();
+        appendMessage("James: " + (data.reply || "No reply"), "assistant");
+      } catch (error) {
+        appendMessage("James: Sorry, I can't respond right now.", "assistant");
+      }
+    }
   </script>
 </body>
 </html>
