@@ -39,7 +39,7 @@ app.post('/chat', async (req, res) => {
     const reply = completion.choices[0].message.content;
     res.json({ reply });
   } catch (err) {
-    console.error('OpenAI error:', err);
+    console.error('OpenAI error:', err.response?.data || err.message || err);
     res.status(500).json({ reply: "Sorry, I can't respond right now." });
   }
 });
