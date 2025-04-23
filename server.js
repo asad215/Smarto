@@ -10,27 +10,29 @@ const port = process.env.PORT || 10000;
 
 app.use(bodyParser.json());
 
-// Load training data
 const trainingDataPath = path.join(__dirname, 'james_training.txt');
 const trainingData = fs.readFileSync(trainingDataPath, 'utf-8');
 
-// Initialize OpenAI
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 app.post('/chat', async (req, res) => {
   const userMessage = req.body.message;
+
+  if (!userMessage) {
+    return res.status(400).json({ reply: 'Please provide a message.' });
+  }
 
   try {
     const completion = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [
         { role: 'system', content: trainingData },
-        { role: 'user', content: userMessage }
+        { role: 'user', content: userMessage },
       ],
       max_tokens: 150,
-      temperature: 0.7
+      temperature: 0.7,
     });
 
     const reply = completion.choices[0].message.content;
@@ -42,5 +44,5 @@ app.post('/chat', async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(Server is running on port ${port});
+  console.log(`Server is running on port ${port}`);
 });
