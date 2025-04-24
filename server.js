@@ -29,7 +29,7 @@ app.post('/chat', async (req, res) => {
       },
       {
         headers: {
-          'Authorization': Bearer ${process.env.OPENAI_API_KEY},
+          'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
           'Content-Type': 'application/json'
         }
       }
