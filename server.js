@@ -1,4 +1,3 @@
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
@@ -15,27 +14,30 @@ const trainingData = fs.readFileSync(path.join(__dirname, 'james_training.txt'),
 
 app.post('/chat', async (req, res) => {
   const userMessage = req.body.message;
+  if (!userMessage) {
+    return res.status(400).json({ reply: 'Please provide a message.' });
+  }
 
   try {
     const response = await axios.post('https://api.openai.com/v1/chat/completions', {
       model: 'gpt-3.5-turbo',
       messages: [
         { role: 'system', content: trainingData },
-        { role: 'user', content: userMessage }
+        { role: 'user', content: userMessage },
       ],
       temperature: 0.7,
-      max_tokens: 150
+      max_tokens: 150,
     }, {
       headers: {
+        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
       }
     });
 
     const reply = response.data.choices[0].message.content;
     res.json({ reply });
-  } catch (error) {
-    console.error('OpenAI error:', error.response?.data || error.message);
+  } catch (err) {
+    console.error('OpenAI error:', err.response?.data || err.message);
     res.status(500).json({ reply: "Sorry, I can't respond right now." });
   }
 });
