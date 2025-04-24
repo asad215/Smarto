@@ -3,8 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
-const axios = require('axios');  // Required axios
-
+const axios = require('axios');
 require('dotenv').config();
 
 const app = express();
@@ -12,7 +11,7 @@ const port = process.env.PORT || 10000;
 
 app.use(bodyParser.json());
 
-// Read training data
+// Load training data from file
 const trainingData = fs.readFileSync(path.join(__dirname, 'james_training.txt'), 'utf-8');
 
 app.post('/chat', async (req, res) => {
@@ -36,7 +35,7 @@ app.post('/chat', async (req, res) => {
     );
     res.json({ reply: response.data.choices[0].message.content });
   } catch (error) {
-    console.error(error.message);
+    console.error('OpenAI API Error:', error.message);
     res.status(500).send('Error talking to GPT');
   }
 });
