@@ -6,14 +6,12 @@ const axios = require('axios');
 require('dotenv').config();
 
 const app = express();
-
-// IMPORTANT: use the correct port for Render
 const port = process.env.PORT || 10000;
 
 app.use(bodyParser.json());
-app.use(express.static(__dirname)); // to serve index.html, avatar, etc.
+app.use(express.static(__dirname)); // Serve static files like index.html and avatar
 
-// Load the training text
+// Load training text
 const trainingData = fs.readFileSync(path.join(__dirname, 'james_training.txt'), 'utf-8');
 
 app.post('/chat', async (req, res) => {
@@ -21,30 +19,29 @@ app.post('/chat', async (req, res) => {
 
   try {
     const response = await axios.post(
-  'https://api.openai.com/v1/chat/completions',
-  {
-    model: 'gpt-3.5-turbo',
-    messages: [
-      { role: 'system', content: trainingData },
-      { role: 'user', content: userMessage }
-    ]
-  },
-  {
-    headers: {
-      'Authorization': Bearer ${process.env.OPENAI_API_KEY},
-      'Content-Type': 'application/json'
-    }
-  }
-);
+      'https://api.openai.com/v1/chat/completions',
+      {
+        model: 'gpt-3.5-turbo',
+        messages: [
+          { role: 'system', content: trainingData },
+          { role: 'user', content: userMessage }
+        ]
+      },
+      {
+        headers: {
+          'Authorization': Bearer ${process.env.OPENAI_API_KEY},
+          'Content-Type': 'application/json'
+        }
+      }
+    );
 
     res.json({ reply: response.data.choices[0].message.content });
   } catch (error) {
-    console.error('Error from OpenAI:', error.message);
+    console.error('OpenAI API error:', error.message);
     res.status(500).send('Something went wrong.');
   }
 });
 
-// FINAL STEP: start server on Render's assigned port
 app.listen(port, () => {
   console.log(Server running on port ${port});
 });
