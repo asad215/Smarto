@@ -1,15 +1,14 @@
 {
-  "name": "smarto-chatbot",
+  "name": "chatbot-server",
   "version": "1.0.0",
+  "description": "Express server forwarding chat messages to OpenAI GPT-3.5 Turbo",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "body-parser": "^1.20.2",
-    "node-fetch": "^2.6.9",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1"
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.7",
+    "dotenv": "^8.2.0"
   }
 }

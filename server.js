@@ -1,22 +1,19 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 10000;
-
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.post('/chat', async (req, res) => {
   const userMessage = req.body.message;
-
   try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const apiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`
       },
       body: JSON.stringify({
         model: 'gpt-3.5-turbo',
@@ -25,15 +22,16 @@ app.post('/chat', async (req, res) => {
         ]
       })
     });
-
-    const data = await response.json();
-    res.json({ reply: data.choices[0].message.content });
+    // Parse response and extract the assistant's reply
+    const data = await apiResponse.json();
+    const assistantReply = data.choices[0].message.content;
+    res.json({ reply: assistantReply });
   } catch (error) {
-    console.error("OpenAI Error:", error.message);
-    res.status(500).send("Sorry, I can't respond right now.");
+    console.error('Error calling OpenAI:', error);
+    res.status(500).json({ error: 'Failed to get response from OpenAI' });
   }
 });
 
 app.listen(port, () => {
- console.log(`Server running on port ${port}`);
+  console.log(`Server listening on port ${port}`);
 });
