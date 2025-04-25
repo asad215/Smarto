@@ -1,19 +1,23 @@
 const express = require('express');
 const fetch = require('node-fetch');
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 10000;
+
+app.use(cors()); // Enable CORS for all origins
 app.use(express.json());
 
 app.post('/chat', async (req, res) => {
   const userMessage = req.body.message;
+
   try {
-    const apiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`
+        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
       },
       body: JSON.stringify({
         model: 'gpt-3.5-turbo',
@@ -22,16 +26,15 @@ app.post('/chat', async (req, res) => {
         ]
       })
     });
-    // Parse response and extract the assistant's reply
-    const data = await apiResponse.json();
-    const assistantReply = data.choices[0].message.content;
-    res.json({ reply: assistantReply });
+
+    const data = await response.json();
+    res.json({ reply: data.choices[0].message.content });
   } catch (error) {
-    console.error('Error calling OpenAI:', error);
+    console.error('Error calling OpenAI:', error.message);
     res.status(500).json({ error: 'Failed to get response from OpenAI' });
   }
 });
 
 app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+  console.log(`Server running on port ${port}`);
 });
