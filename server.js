@@ -23,7 +23,7 @@ app.post('/chat', async (req, res) => {
             {
                 model: 'gpt-3.5-turbo',
                 messages: [
-                    { role: 'system', content: trainingData },
+                    { role: 'system', content: 'You are James, an AI assistant for Smarto.Space. You help with customer service, lead collection, and FAQs. Always reply helpfully.' },
                     { role: 'user', content: userMessage }
                 ]
             },
