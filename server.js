@@ -40,7 +40,6 @@ app.post('/chat', async (req, res) => {
     return res.json({ reply: faqAnswer });
   }
 
-  // Fallback to GPT-3.5 if no FAQ match
   try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -65,4 +64,3 @@ app.post('/chat', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-
