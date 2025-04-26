@@ -19,13 +19,19 @@ try {
   console.error('Error loading training.txt:', error.message);
 }
 
-// Helper function to find FAQ answer
+// Smarter Helper function to find FAQ answer
 function getFAQAnswer(userMessage) {
   const lines = trainingData.split('\n\n');
+  userMessage = userMessage.toLowerCase().trim();
+
   for (const line of lines) {
     const [question, answer] = line.split('\n').map(l => l.trim());
-    if (question && answer && userMessage.toLowerCase().includes(question.toLowerCase())) {
-      return answer;
+    if (question && answer) {
+      const questionKeywords = question.toLowerCase().split(' ').filter(w => w.length > 2);
+      const matchCount = questionKeywords.filter(word => userMessage.includes(word)).length;
+      if (matchCount >= Math.floor(questionKeywords.length / 2)) {
+        return answer;
+      }
     }
   }
   return null;

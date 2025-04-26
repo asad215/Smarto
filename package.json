@@ -1,7 +1,7 @@
 {
   "name": "smarto-bot",
   "version": "1.0.0",
-  "description": "Smarto.Space AI Bot with FAQs and GPT-3.5 Fallback",
+  "description": "Smarto.Space AI Bot with training text and GPT-3.5 fallback",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
