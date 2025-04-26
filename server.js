@@ -1,7 +1,8 @@
-
+process.env.TZ = 'UTC';
 const express = require('express');
 const fetch = require('node-fetch');
 const cors = require('cors');
+const fs = require('fs');
 require('dotenv').config();
 
 const app = express();
@@ -10,20 +11,27 @@ const port = process.env.PORT || 10000;
 app.use(cors());
 app.use(express.json());
 
-// Sample FAQs - replace this with dynamic fetch from Google Sheets if needed
-const faqs = [
-  { question: "What is Smarto.Space?", answer: "Smarto.Space is an AI automation platform for businesses." },
-  { question: "Who is James?", answer: "James is the 24/7 AI chatbot assistant for Smarto.Space." },
-  { question: "Do you offer a free trial?", answer: "Yes, we offer a 1-day free trial with no payment required." }
-];
-
-function getFAQAnswer(userMessage) {
-  const found = faqs.find(faq =>
-    userMessage.toLowerCase().includes(faq.question.toLowerCase())
-  );
-  return found ? found.answer : null;
+// Load training text
+let trainingData = '';
+try {
+  trainingData = fs.readFileSync('training.txt', 'utf-8');
+} catch (error) {
+  console.error('Error loading training.txt:', error.message);
 }
 
+// Helper function to find FAQ answer
+function getFAQAnswer(userMessage) {
+  const lines = trainingData.split('\n\n');
+  for (const line of lines) {
+    const [question, answer] = line.split('\n').map(l => l.trim());
+    if (question && answer && userMessage.toLowerCase().includes(question.toLowerCase())) {
+      return answer;
+    }
+  }
+  return null;
+}
+
+// Chat endpoint
 app.post('/chat', async (req, res) => {
   const userMessage = req.body.message;
   const faqAnswer = getFAQAnswer(userMessage);
@@ -32,6 +40,7 @@ app.post('/chat', async (req, res) => {
     return res.json({ reply: faqAnswer });
   }
 
+  // Fallback to GPT-3.5 if no FAQ match
   try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -41,9 +50,7 @@ app.post('/chat', async (req, res) => {
       },
       body: JSON.stringify({
         model: 'gpt-3.5-turbo',
-        messages: [
-          { role: 'user', content: userMessage }
-        ]
+        messages: [{ role: 'user', content: userMessage }]
       })
     });
 
@@ -58,3 +65,4 @@ app.post('/chat', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
