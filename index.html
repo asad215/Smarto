@@ -119,65 +119,93 @@
                     <small style="color: green;">● James is online</small>
                 </div>
             </div>
-            <button id="chat-close" class="close-btn">×</button>
-        </div>
-        <div id="chat-box"></div>
-        <input id="chat-input" placeholder="Type your message...">
-        <button id="chat-send">Send</button>
+            <button id="chat-close" class="close-btn">&times;</button>
     </div>
+    <div id="chat-box"></div>
+    <input id="chat-input" placeholder="Type your message..." />
+    <button id="chat-send">Send</button>
+  </div>
 
-    <button id="chat-toggle">Chat with us</button>
+  <button id="chat-toggle">Chat with us</button>
 
-    <script>
-        const chatWidget = document.getElementById('chat-widget');
-        const chatToggle = document.getElementById('chat-toggle');
-        const chatClose = document.getElementById('chat-close');
-        const chatInput = document.getElementById('chat-input');
-        const chatBox = document.getElementById('chat-box');
-        const chatSend = document.getElementById('chat-send');
+  <script>
+    const chatWidget = document.getElementById('chat-widget');
+    const chatToggle = document.getElementById('chat-toggle');
+    const chatClose = document.getElementById('chat-close');
+    const chatInput = document.getElementById('chat-input');
+    const chatBox = document.getElementById('chat-box');
+    const chatSend = document.getElementById('chat-send');
 
-        chatToggle.addEventListener('click', () => {
-            chatWidget.style.display = 'block';
-            chatToggle.style.display = 'none';
-            if (!window.politeMessageShown) {
-    chatBox.innerHTML += `<div><strong>SMARTO.SPACE:</strong> Hello! May I kindly have your Name, Email, and Phone Number so we can assist you better?</div>`;
-    chatBox.scrollTop = chatBox.scrollHeight;
-    window.politeMessageShown = true;
-}
-        });
+    chatToggle.addEventListener('click', () => {
+        chatWidget.style.display = 'block';
+        chatToggle.style.display = 'none';
+    });
 
-        chatClose.addEventListener('click', () => {
-            chatWidget.style.display = 'none';
-            chatToggle.style.display = 'block';
-        });
+    chatClose.addEventListener('click', () => {
+        chatWidget.style.display = 'none';
+        chatToggle.style.display = 'block';
+    });
 
-        chatSend.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
-        });
-
-        async function sendMessage() {
-            const message = chatInput.value.trim();
-            if (!message) return;
-            chatBox.innerHTML += `<div><strong>You:</strong> ${message}</div>`;
-            chatInput.value = '';
-            try {
-                const res = await fetch('https://james-chatbot-2.onrender.com/chat', {
-
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message })
-                });
-                const data = await res.json();
-                chatBox.innerHTML += `<div><strong>James:</strong> ${data.reply}</div>`;
-                chatBox.scrollTop = chatBox.scrollHeight;
-            } catch {
-                chatBox.innerHTML += `<div><strong>James:</strong> Sorry, I can't respond right now.</div>`;
-            }
+    chatSend.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            sendMessage();
         }
-    </script>
+    });
+  
+// Auto-open chat ONCE per session and show greeting
+window.addEventListener("DOMContentLoaded", function () {
+  if (!sessionStorage.getItem("chatOpened")) {
+    chatWidget.style.display = "block";
+    chatToggle.style.display = "none";
 
+    chatBox.innerHTML += `
+      <div><strong>SMARTO.SPACE:</strong><br>
+      Hello, greetings! Welcome to Smarto.Space.<br><br>
+      May I kindly have the following details so we can assist you better:<br><br>
+      A. <u>Name</u><br>
+      B. <u>Email</u><br>
+      C. <u>Phone Number</u>
+      </div>
+    `;
+    chatBox.scrollTop = chatBox.scrollHeight;
+    sessionStorage.setItem("chatOpened", "true");
 
-</body></html>
+      }
+});
+
+// Show "James is typing..." before reply
+async function sendMessage() {
+  const message = chatInput.value.trim();
+  if (!message) return;
+  chatBox.innerHTML += `<div><strong>You:</strong> ${message}</div>`;
+  chatInput.value = '';
+
+  chatBox.innerHTML += `<div id="typing"><em>James is typing...</em></div>`;
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  try {
+    const res = await fetch('https://james-chatbot-2.onrender.com/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message })
+    });
+
+    const data = await res.json();
+    setTimeout(() => {
+      const typingEl = document.getElementById("typing");
+      if (typingEl) typingEl.remove();
+      chatBox.innerHTML += `<div><strong>James:</strong> ${data.reply}</div>`;
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }, 2000 + message.length * 20);
+  } catch {
+    const typingEl = document.getElementById("typing");
+    if (typingEl) typingEl.remove();
+    chatBox.innerHTML += `<div><strong>James:</strong> Sorry, I can't respond right now.</div>`;
+  }
+}
+
+</script>
+</body>
+</html>
+
