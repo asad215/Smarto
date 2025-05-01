@@ -1,9 +1,6 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smarto.Space – AI Automation for Modern Businesses</title>
     <style>
         body {
@@ -116,16 +113,16 @@
     <div id="chat-widget">
         <div class="chat-header">
             <div style="display: flex; align-items: center; gap: 10px;">
-                <img src="james-avatar.png" alt="James" class="avatar">
-                <div>
+                <img src="smarto-avatar.png" alt="Smarto.Space" class="avatar">               
+                 <div>
                     <strong>James - AI Assistant</strong><br>
                     <small style="color: green;">● James is online</small>
                 </div>
             </div>
-            <button id="chat-close" class="close-btn">&times;</button>
+            <button id="chat-close" class="close-btn">×</button>
         </div>
         <div id="chat-box"></div>
-        <input id="chat-input" placeholder="Type your message..." />
+        <input id="chat-input" placeholder="Type your message...">
         <button id="chat-send">Send</button>
     </div>
 
@@ -142,6 +139,11 @@
         chatToggle.addEventListener('click', () => {
             chatWidget.style.display = 'block';
             chatToggle.style.display = 'none';
+            if (!window.politeMessageShown) {
+    chatBox.innerHTML += `<div><strong>SMARTO.SPACE:</strong> Hello! May I kindly have your Name, Email, and Phone Number so we can assist you better?</div>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
+    window.politeMessageShown = true;
+}
         });
 
         chatClose.addEventListener('click', () => {
@@ -163,6 +165,7 @@
             chatInput.value = '';
             try {
                 const res = await fetch('https://james-chatbot-2.onrender.com/chat', {
+
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ message })
@@ -175,5 +178,6 @@
             }
         }
     </script>
-</body>
-</html>
+
+
+</body></html>
